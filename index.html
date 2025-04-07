@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en" class="light scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuqmanBooso - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#3B82F6', // blue-500
+                            dark: '#60A5FA', // blue-400
+                        },
+                        background: {
+                            light: '#F9FAFB', // gray-50
+                            dark: '#111827', // gray-900
+                        },
+                        card: {
+                            light: '#FFFFFF', // white
+                            dark: '#1F2937', // gray-800
+                        },
+                        text: {
+                            light: '#1F2937', // gray-800
+                            dark: '#F9FAFB', // gray-50
+                        }
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'typing': 'typing 3.5s steps(30, end), blink .75s step-end infinite',
+                        'wave': 'wave 2.5s ease-in-out infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        typing: {
+                            '0%': { width: '0' },
+                            '100%': { width: '100%' }
+                        },
+                        blink: {
+                            '0%, 100%': { borderColor: 'transparent' },
+                            '50%': { borderColor: 'currentColor' }
+                        },
+                        wave: {
+                            '0%': { transform: 'rotate(0.0deg)' },
+                            '10%': { transform: 'rotate(14.0deg)' },
+                            '20%': { transform: 'rotate(-8.0deg)' },
+                            '30%': { transform: 'rotate(14.0deg)' },
+                            '40%': { transform: 'rotate(-4.0deg)' },
+                            '50%': { transform: 'rotate(10.0deg)' },
+                            '60%': { transform: 'rotate(0.0deg)' },
+                            '100%': { transform: 'rotate(0.0deg)' }
+                        },
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes scale {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-slide-up {
+            animation: slideUp 0.6s ease-out forwards;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .animate-rotate {
+            animation: rotate 15s linear infinite;
+        }
+        
+        .animate-scale {
+            animation: scale 3s ease-in-out infinite;
+        }
+        
+        .animate-slide-left {
+            animation: slideInLeft 0.6s ease-out forwards;
+        }
+
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring__circle {
+            transition: stroke-dashoffset 1.5s ease-in-out;
+            stroke-linecap: round;
+        }
+
+        .mobile-menu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(-100%);
+        }
+
+        .mobile-menu.show {
+            transform: translateX(0);
+        }
+        
+        .typewriter h1 {
+            overflow: hidden;
+            border-right: .15em solid;
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: 
+                typing 3.5s steps(30, end),
+                blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: currentColor; }
+        }
+
+        .glow {
+            text-shadow: 0 0 5px rgba(59, 130, 246, 0.7), 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+        
+        .scroll-indicator {
+            animation: bounce-slow 2s infinite;
+        }
+        
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(15px); }
+        }
+        
+        .parallax {
+            transform: translateY(0);
+            transition: transform 0.5s cubic-bezier(0.33, 1, 0.68, 1);
+        }
+        
+        .blog-card:hover .blog-img {
+            transform: scale(1.05);
+        }
+        
+        .blog-img {
+            transition: transform 0.5s ease;
+        }
+        
+        /* Theme Transitions */
+        .theme-transition {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+    </style>
+</head>
+<body class="theme-transition bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
+    <!-- Background Elements -->
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+        <div class="absolute top-20 left-10 w-64 h-64 bg-blue-200 dark:bg-blue-900 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-20 animate-float"></div>
+        <div class="absolute top-40 right-20 w-72 h-72 bg-purple-200 dark:bg-purple-900 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-20 animate-float" style="animation-delay: 2s"></div>
+        <div class="absolute bottom-40 left-1/4 w-96 h-96 bg-pink-200 dark:bg-pink-900 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-20 animate-float" style="animation-delay: 4s"></div>
+    </div>
+
+    <!-- Enhanced Navigation -->
+<header class="fixed w-full z-50 backdrop-blur-md bg-white/80 dark:bg-gray-900/90 shadow-lg theme-transition border-b border-gray-200 dark:border-gray-800">
+    <div class="container mx-auto px-6 py-4">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+                    <span class="relative inline-block">
+                        Luqman Booso
+                        <span class="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
+                    </span>
+                </span>
+                <span class="animate-wave inline-block ml-1">👋</span>
+            </div>
+            
+            <div class="flex items-center gap-6">
+                <!-- Theme Toggle -->
+                <button id="themeToggle" class="p-2.5 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark theme-transition transition-all">
+                    <svg id="sunIcon" class="w-5 h-5 text-yellow-500 hidden dark:block" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path>
+                    </svg>
+                    <svg id="moonIcon" class="w-5 h-5 text-gray-700 block dark:hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link py-2 px-1 font-medium hover:text-primary-light dark:hover:text-primary-dark transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-primary-light dark:after:bg-primary-dark after:transition-all">Home</a>
+                    <a href="#about" class="nav-link py-2 px-1 font-medium hover:text-primary-light dark:hover:text-primary-dark transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-primary-light dark:after:bg-primary-dark after:transition-all">About</a>
+                    <a href="#projects" class="nav-link py-2 px-1 font-medium hover:text-primary-light dark:hover:text-primary-dark transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-primary-light dark:after:bg-primary-dark after:transition-all">Projects</a>
+                    <a href="#skills" class="nav-link py-2 px-1 font-medium hover:text-primary-light dark:hover:text-primary-dark transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-primary-light dark:after:bg-primary-dark after:transition-all">Skills</a>
+                    <a href="#contact" class="ml-2 px-5 py-2 bg-primary-light dark:bg-primary-dark text-white rounded-full hover:bg-blue-700 dark:hover:bg-blue-500 transition-colors shadow-sm">Contact</a>
+                </nav>
+                <button id="menuBtn" class="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mobile Menu with Enhanced Styling -->
+    <div id="mobileMenu" class="mobile-menu fixed top-0 left-0 h-full w-72 bg-white dark:bg-gray-900 p-6 md:hidden shadow-2xl theme-transition z-50">
+        <div class="flex justify-between items-center mb-8 pb-4 border-b border-gray-200 dark:border-gray-700">
+            <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">Luqman Booso</span>
+            <button id="closeMenu" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col space-y-5">
+            <a href="#home" class="flex items-center py-2 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <i class="fas fa-home mr-3 text-primary-light dark:text-primary-dark"></i>
+                <span>Home</span>
+            </a>
+            <a href="#about" class="flex items-center py-2 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <i class="fas fa-user mr-3 text-primary-light dark:text-primary-dark"></i>
+                <span>About</span>
+            </a>
+            <a href="#projects" class="flex items-center py-2 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <i class="fas fa-briefcase mr-3 text-primary-light dark:text-primary-dark"></i>
+                <span>Projects</span>
+            </a>
+            <a href="#skills" class="flex items-center py-2 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <i class="fas fa-code mr-3 text-primary-light dark:text-primary-dark"></i>
+                <span>Skills</span>
+            </a>
+            <a href="#contact" class="flex items-center py-2 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <i class="fas fa-envelope mr-3 text-primary-light dark:text-primary-dark"></i>
+                <span>Contact</span>
+            </a>
+        </nav>
+        <div class="mt-10 pt-6 border-t border-gray-200 dark:border-gray-700">
+            <div class="flex space-x-5 justify-center">
+                <a href="https://github.com/luqmanbooso" class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://linkedin.com/in/luqmanbooso" class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://lukathegeek.blogspot.com/" class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors">
+                    <i class="fas fa-blog"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <!-- Main Content Container -->
+    <main id="app">
+        <!-- Content will be dynamically loaded here by the router -->
+        <div id="page-loader" class="fixed inset-0 bg-white dark:bg-gray-900 z-50 flex items-center justify-center">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-600 dark:border-blue-400"></div>
+        </div>
+    </main>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section id="home" class="w-full pt-32 pb-20 md:pt-40 md:pb-28">
+    <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 animate-fade-in" style="animation-delay: 0.3s">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                    Hello, I'm <span class="text-primary-light dark:text-primary-dark glow">Luqman Booso</span>
+                </h1>
+                <div class="h-1 w-20 bg-primary-light dark:bg-primary-dark mb-6"></div>
+                <h2 class="text-2xl md:text-3xl font-medium mb-6">IT Undergraduate | Programmer</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-lg">
+                    As an IT undergraduate at SLIIT, I possess a vast knowledge of programming and a solid foundation in information technology. I specialize in crafting efficient, user-centric solutions for real-world challenges.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#projects" class="px-6 py-3 bg-primary-light dark:bg-primary-dark text-white rounded-md hover:bg-blue-700 dark:hover:bg-blue-500 transition-colors shadow-md">
+                        View My Work
+                    </a>
+                    <a href="#contact" class="px-6 py-3 border-2 border-gray-700 dark:border-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        Let's Connect
+                    </a>
+                </div>
+                <div class="flex mt-10 space-x-4">
+                    <a href="https://github.com/luqmanbooso" aria-label="GitHub" class="text-gray-600 dark:text-gray-400 hover:text-primary-light dark:hover:text-primary-dark">
+                        <i class="fab fa-github text-2xl"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/luqmanbooso" aria-label="LinkedIn" class="text-gray-600 dark:text-gray-400 hover:text-primary-light dark:hover:text-primary-dark">
+                        <i class="fab fa-linkedin text-2xl"></i>
+                    </a>
+                    <a href="https://lukathegeek.blogspot.com/" aria-label="Blog" class="text-gray-600 dark:text-gray-400 hover:text-primary-light dark:hover:text-primary-dark">
+                        <i class="fas fa-blog text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 mt-12 md:mt-0 flex justify-center animate-fade-in" style="animation-delay: 0.6s">
+                <div class="relative">
+                    <div class="absolute -inset-1 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 opacity-70 blur"></div>
+                    <img src="js/images/profilefront.png" alt="Luqman Booso" class="rounded-full w-64 h-64 md:w-80 md:h-80 object-cover relative z-10 border-4 border-white dark:border-gray-800">
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center mt-16">
+            <a href="#about" class="scroll-indicator text-4xl text-primary-light dark:text-primary-dark">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+        <!-- About Section -->
+        <section id="about" class="w-full py-20 bg-gray-50 dark:bg-gray-800 theme-transition">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4" data-aos="fade-up">About Me</h2>
+            <div class="h-1 w-24 bg-primary-light dark:bg-primary-dark mx-auto"></div>
+        </div>
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+            <div class="md:w-2/5" data-aos="fade-right">
+                <img src="js/images/profile.png" alt="Luqman Booso" class="rounded-lg shadow-xl w-full object-cover h-auto">
+            </div>
+            <div class="md:w-3/5" data-aos="fade-left" data-aos-delay="200">
+                <h3 class="text-xl md:text-2xl font-semibold mb-4">IT Undergraduate & Programmer</h3>
+                <p class="text-gray-700 dark:text-gray-300 mb-5">
+                    I am currently pursuing a degree in Computer Software Engineering at SLIIT. My academic journey has equipped me with a strong foundation in programming and analytical skills, enabling me to tackle complex challenges in the tech industry.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300 mb-5">
+                    My projects include <strong>BuildMart</strong>, an auction and procurement system for the construction industry, and <strong>Boutique</strong>, a Java-based hotel management system. These experiences have honed my skills in technologies like MongoDB, Express.js, Java, and Eclipse.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300 mb-6">
+                    Beyond academics, I am passionate about blogging and sharing knowledge through my blog, <a href="https://lukathegeek.blogspot.com/" class="text-primary-light dark:text-primary-dark hover:underline">Luka the Geek</a>. I am also an active contributor to open-source projects and enjoy collaborating with like-minded individuals.
+                </p>
+                <div class="grid grid-cols-2 gap-4 mb-8">
+                    <div class="flex items-center">
+                        <i class="fas fa-graduation-cap text-primary-light dark:text-primary-dark mr-2"></i>
+                        <span>Currently Learning as an Undergraduate at SLIIT</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-briefcase text-primary-light dark:text-primary-dark mr-2"></i>
+                        <span>SQL & Analytical Skills</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-project-diagram text-primary-light dark:text-primary-dark mr-2"></i>
+                        <span>2+ Projects</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-award text-primary-light dark:text-primary-dark mr-2"></i>
+                        <span>6+ Certifications</span>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#resume" class="px-6 py-3 bg-primary-light dark:bg-primary-dark text-white rounded-md hover:bg-blue-700 dark:hover:bg-blue-500 transition-colors shadow-md inline-block">
+                        Download Resume <i class="fas fa-download ml-2"></i>
+                    </a>
+                    <a href="#contact" class="px-6 py-3 border-2 border-gray-700 dark:border-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        Get In Touch
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="w-full py-20 bg-gray-50 dark:bg-gray-800 theme-transition">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4" data-aos="fade-up">My Projects</h2>
+                    <div class="h-1 w-24 bg-primary-light dark:bg-primary-dark mx-auto"></div>
+                    <p class="text-gray-600 dark:text-gray-400 mt-4 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                        Here are some of my recent projects that showcase my technical skills and problem-solving abilities
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project 1 -->
+                    <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all theme-transition" data-aos="fade-up">
+                        <div class="relative overflow-hidden h-60">
+                            <img src="js\images\Screenshot (729)(1).png" alt="FinWallet" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                                <div class="p-4 text-white">
+                                    <h3 class="text-lg font-bold">Boutique</h3>
+                                    <p class="text-sm text-gray-200">Hotel Booking Platform</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                A comprehensive personal finance management application that helps users track expenses, create budgets, and visualize spending patterns through interactive dashboards.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded text-xs">Java</span>
+                                <span class="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded text-xs">HTML5</span>
+                                <span class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded text-xs">Bootstrap</span>
+                                <span class="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded text-xs">MySQL</span>
+                                <span class="px-2 py-1 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded text-xs">MVC Architecture</span>
+                                
+                            </div>
+                            <div class="flex justify-between">
+                                <a href="#" class="text-primary-light dark:text-primary-dark hover:underline">Live Demo</a>
+                                <a href="https://github.com/luqmanbooso/Boutique" class="text-primary-light dark:text-primary-dark hover:underline">Source Code</a>
+                            </div>
+                        </div>
+                    </div>
+                 
+                </div>
+                
+              
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="w-full py-20 theme-transition">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4" data-aos="fade-up">My Skills</h2>
+            <div class="h-1 w-24 bg-primary-light dark:bg-primary-dark mx-auto"></div>
+            <p class="text-gray-600 dark:text-gray-400 mt-4 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                My expertise spans multiple programming languages and technologies, enabling me to build full-stack solutions for diverse needs
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <!-- Programming Languages -->
+            <div class="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg theme-transition" data-aos="zoom-in">
+                <div class="text-center mb-6">
+                    <div class="inline-block p-4 bg-blue-100 dark:bg-blue-900 rounded-full mb-4">
+                        <i class="fas fa-code text-2xl text-blue-600 dark:text-blue-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold">Programming Languages</h3>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="font-medium">Python</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div class="bg-blue-600 dark:bg-blue-500 h-full rounded-full" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="font-medium">JavaScript</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div class="bg-blue-600 dark:bg-blue-500 h-full rounded-full" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="font-medium">Java</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div class="bg-blue-600 dark:bg-blue-500 h-full rounded-full" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="font-medium">C/C++</span>
+                            <span>80%</span>
+                        </div>
+                        <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div class="bg-blue-600 dark:bg-blue-500 h-full rounded-full" style="width: 80%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Frontend Technologies -->
+            <div class="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg theme-transition" data-aos="zoom-in" data-aos-delay="200">
+                <div class="text-center mb-6">
+                    <div class="inline-block p-4 bg-purple-100 dark:bg-purple-900 rounded-full mb-4">
+                        <i class="fas fa-laptop-code text-2xl text-purple-600 dark:text-purple-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold">Frontend Development</h3>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="font-medium">HTML/CSS</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div class="bg-purple-600 dark:bg-purple-500 h-full rounded-full" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="font-medium">React</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div class="bg-purple-600 dark:bg-purple-500 h-full rounded-full" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="font-medium">Tailwind CSS</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div class="bg-purple-600 dark:bg-purple-500 h-full rounded-full" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="font-medium">UI/UX Principles</span>
+                            <span>75%</span>
+                        </div>
+                        <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div class="bg-purple-600 dark:bg-purple-500 h-full rounded-full" style="width: 75%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Backend & Tools -->
+            <div class="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg theme-transition" data-aos="zoom-in" data-aos-delay="400">
+                <div class="text-center mb-6">
+                    <div class="inline-block p-4 bg-green-100 dark:bg-green-900 rounded-full mb-4">
+                        <i class="fas fa-server text-2xl text-green-600 dark:text-green-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold">Backend & Tools</h3>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="font-medium">Node.js/Express</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div class="bg-green-600 dark:bg-green-500 h-full rounded-full" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="font-medium">MySQL/MongoDB</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div class="bg-green-600 dark:bg-green-500 h-full rounded-full" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="font-medium">Git/GitHub</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div class="bg-green-600 dark:bg-green-500 h-full rounded-full" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="font-medium">Docker</span>
+                            <span>70%</span>
+                        </div>
+                        <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div class="bg-green-600 dark:bg-green-500 h-full rounded-full" style="width: 70%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Additional Skills -->
+        <div class="mt-16 bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg theme-transition" data-aos="fade-up">
+            <h3 class="text-xl font-bold mb-6 text-center">Additional Skills & Technologies</h3>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 flex flex-col items-center">
+                    <i class="fab fa-figma text-2xl mb-2 text-primary-light dark:text-primary-dark"></i>
+                    <span>Figma</span>
+                </div>
+                <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 flex flex-col items-center">
+                    <i class="fas fa-cogs text-2xl mb-2 text-primary-light dark:text-primary-dark"></i>
+                    <span>RESTful APIs</span>
+                </div>
+                <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 flex flex-col items-center">
+                    <i class="fab fa-aws text-2xl mb-2 text-primary-light dark:text-primary-dark"></i>
+                    <span>AWS Services</span>
+                </div>
+                <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 flex flex-col items-center">
+                    <i class="fas fa-mobile-alt text-2xl mb-2 text-primary-light dark:text-primary-dark"></i>
+                    <span>Responsive Design</span>
+                </div>
+                <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 flex flex-col items-center">
+                    <i class="fas fa-shield-alt text-2xl mb-2 text-primary-light dark:text-primary-dark"></i>
+                    <span>Security Best Practices</span>
+                </div>
+                <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 flex flex-col items-center">
+                    <i class="fas fa-tachometer-alt text-2xl mb-2 text-primary-light dark:text-primary-dark"></i>
+                    <span>Performance Optimization</span>
+                </div>
+                <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 flex flex-col items-center">
+                    <i class="fas fa-code-branch text-2xl mb-2 text-primary-light dark:text-primary-dark"></i>
+                    <span>CI/CD Pipelines</span>
+                </div>
+                <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 flex flex-col items-center">
+                    <i class="fas fa-flask text-2xl mb-2 text-primary-light dark:text-primary-dark"></i>
+                    <span>Testing (Jest, JUnit)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <!-- Contact Section -->
+<section id="contact" class="w-full py-20 bg-gray-50 dark:bg-gray-800 theme-transition">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4" data-aos="fade-up">Get In Touch</h2>
+            <div class="h-1 w-24 bg-primary-light dark:bg-primary-dark mx-auto"></div>
+            <p class="text-gray-600 dark:text-gray-400 mt-4 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                Have a project in mind or want to discuss potential opportunities? I'd love to hear from you!
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8 theme-transition" data-aos="fade-right">
+                <h3 class="text-2xl font-bold mb-6">Contact Information</h3>
+                <div class="space-y-6">
+                    <div class="flex items-start">
+                        <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-full mr-4">
+                            <i class="fas fa-envelope text-blue-600 dark:text-blue-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg">Email</h4>
+                            <p class="text-gray-600 dark:text-gray-400">luqmanbooso@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full mr-4">
+                            <i class="fas fa-phone text-green-600 dark:text-green-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg">Phone</h4>
+                            <p class="text-gray-600 dark:text-gray-400">0768010697</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="bg-purple-100 dark:bg-purple-900 p-3 rounded-full mr-4">
+                            <i class="fas fa-map-marker-alt text-purple-600 dark:text-purple-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg">Location</h4>
+                            <p class="text-gray-600 dark:text-gray-400">Colombo, Western Province, Sri Lanka</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8 theme-transition" data-aos="fade-left">
+                <h3 class="text-2xl font-bold mb-6">Send Me a Message</h3>
+                <form id="contactForm" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            name="name" 
+                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-transparent bg-white dark:bg-gray-800 theme-transition" 
+                            placeholder=" Your Name" 
+                            required
+                        >
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-transparent bg-white dark:bg-gray-800 theme-transition" 
+                            placeholder="name@example.com" 
+                            required
+                        >
+                    </div>
+                    <div>
+                        <label for="subject" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Subject</label>
+                        <input 
+                            type="text" 
+                            id="subject" 
+                            name="subject" 
+                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-transparent bg-white dark:bg-gray-800 theme-transition" 
+                            placeholder="Project Inquiry" 
+                            required
+                        >
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Message</label>
+                        <textarea 
+                            id="message" 
+                            name="message" 
+                            rows="5" 
+                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-transparent bg-white dark:bg-gray-800 theme-transition" 
+                            placeholder="Tell me about your project or inquiry..." 
+                            required
+                        ></textarea>
+                    </div>
+                    <button 
+                        type="submit" 
+                        class="w-full py-3 px-6 bg-primary-light dark:bg-primary-dark text-white font-medium rounded-md hover:bg-blue-700 dark:hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-light dark:focus:ring-primary-dark transition-colors"
+                    >
+                        <i class="fas fa-paper-plane mr-2"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h3 class="text-xl font-bold mb-4">Luqman Booso</h3>
+                    <p class="mb-4 text-gray-300 max-w-md">
+                        Full stack developer creating beautiful, functional web applications with a focus on user experience.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-white hover:text-blue-400 transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-blue-400 transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-blue-400 transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-blue-400 transition-colors">
+                            <i class="fas fa-envelope text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <nav class="flex flex-col space-y-2">
+                        <a href="#home" class="text-gray-300 hover:text-white transition-colors">Home</a>
+                        <a href="#about" class="text-gray-300 hover:text-white transition-colors">About</a>
+                        <a href="#projects" class="text-gray-300 hover:text-white transition-colors">Projects</a>
+                        <a href="#skills" class="text-gray-300 hover:text-white transition-colors">Skills</a>
+                    </nav>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact</h3>
+                    <div class="space-y-3 text-gray-300">
+                        <p class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3"></i> Colombo, Sri Lanka
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-envelope mr-3"></i> luqmanbooso@gmail.com
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-phone mr-3"></i> +94 76 8010 697
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-10 pt-6 text-center">
+                <p class="text-gray-400">&copy; 2025 Luqman Booso. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="js/router.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
