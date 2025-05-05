@@ -8,9 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
         mirror: true
     });
     
-    // Theme Toggle Functionality
-    setupThemeToggle();
-    
     // Mobile Menu Functionality
     setupMobileMenu();
     
@@ -31,6 +28,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Setup scroll events
     setupScrollEvents();
+    
+    // Setup scroll-to-top button
+    setupScrollToTop();
+    
+    // Setup email sending functionality
+    setupEmailService();
+    
+    // Setup contact form
+    setupContactForm();
 });
 
 // Initialize the router when DOM is ready
@@ -38,31 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const router = initializeRouter();
     // Other initialization code can go here
 });
-
-function setupThemeToggle() {
-    const themeToggle = document.getElementById('themeToggle');
-    const html = document.documentElement;
-    
-    // Check for saved theme preference or respect OS preference
-    if (localStorage.getItem('theme') === 'dark' || 
-        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        html.classList.add('dark');
-    } else {
-        html.classList.remove('dark');
-    }
-    
-    // Toggle theme when button is clicked
-    themeToggle.addEventListener('click', () => {
-        html.classList.toggle('dark');
-        
-        // Save preference to localStorage
-        if (html.classList.contains('dark')) {
-            localStorage.setItem('theme', 'dark');
-        } else {
-            localStorage.setItem('theme', 'light');
-        }
-    });
-}
 
 function setupMobileMenu() {
     const menuBtn = document.getElementById('menuBtn');
@@ -106,12 +87,63 @@ function setupScrollEvents() {
         const header = document.querySelector('header');
         if (scrollPosition > 100) {
             header.classList.add('shadow-md');
-            header.classList.add('bg-white/90', 'backdrop-blur-sm');
-            header.classList.add('dark:bg-gray-900/90');
+            header.classList.add('backdrop-blur-sm');
+            header.classList.add('bg-gray-900/90');
         } else {
             header.classList.remove('shadow-md');
-            header.classList.remove('bg-white/90', 'backdrop-blur-sm');
-            header.classList.remove('dark:bg-gray-900/90');
+            header.classList.remove('backdrop-blur-sm');
+            header.classList.remove('bg-gray-900/90');
+        }
+        
+        // Toggle scroll-to-top button visibility
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        if (scrollPosition > 500) {
+            scrollToTopBtn.classList.add('show');
+        } else {
+            scrollToTopBtn.classList.remove('show');
+        }
+        
+        // Add active class to current section in navigation
+        highlightCurrentSection(scrollPosition);
+    });
+}
+
+function setupScrollToTop() {
+    const scrollToTopBtn = document.getElementById('scrollToTop');
+    
+    scrollToTopBtn.addEventListener('click', () => {
+        // Smooth scroll to top
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
+function highlightCurrentSection(scrollPosition) {
+    // Get all sections
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    // Find the current section
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute('id');
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            // Remove active class from all nav links
+            navLinks.forEach(link => {
+                link.classList.remove('text-primary-dark');
+                link.classList.remove('after:w-full');
+            });
+            
+            // Add active class to current section's nav link
+            const activeLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('text-primary-dark');
+                activeLink.classList.add('after:w-full');
+            }
         }
     });
 }
@@ -138,20 +170,31 @@ function animateSkillBarsOnScroll() {
     }
 }
 
-// Form validation
+// Email service setup
+function setupEmailService() {
+    // Initialize EmailJS with your user ID
+    // Replace 'YOUR_USER_ID' with your actual EmailJS user ID
+    emailjs.init("YOUR_USER_ID");
+}
+
+// Form validation and submission
 function setupContactForm() {
     const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('form-status');
+    const submitBtn = document.getElementById('submitBtn');
+    
     if (!contactForm) return;
     
     contactForm.addEventListener('submit', (event) => {
         event.preventDefault();
         
         // Simple validation
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const subject = document.getElementById('subject').value.trim();
+        const message = document.getElementById('message').value.trim();
         
-        if (!name || !email || !message) {
+        if (!name || !email || !subject || !message) {
             showFormError('Please fill in all fields');
             return;
         }
@@ -161,30 +204,66 @@ function setupContactForm() {
             return;
         }
         
-        // Simulate form submission
-        showFormSuccess('Thank you! Your message has been sent.');
-        contactForm.reset();
+        // Show loading state
+        submitBtn.classList.add('submit-button-loading');
+        submitBtn.disabled = true;
+        
+        // Prepare template parameters
+        const templateParams = {
+            from_name: name,
+            from_email: email,
+            subject: subject,
+            message: message
+        };
+        
+        // Send email using EmailJS
+        // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual EmailJS service and template IDs
+        emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+            .then(function(response) {
+                console.log('Email sent successfully!', response.status, response.text);
+                showFormSuccess('Thank you! Your message has been sent successfully.');
+                contactForm.reset();
+            })
+            .catch(function(error) {
+                console.log('Failed to send email.', error);
+                showFormError('Failed to send message. Please try again later.');
+            })
+            .finally(function() {
+                // Remove loading state
+                submitBtn.classList.remove('submit-button-loading');
+                submitBtn.disabled = false;
+            });
     });
 }
 
 function showFormError(message) {
     const formStatus = document.getElementById('form-status');
     formStatus.textContent = message;
-    formStatus.className = 'mt-4 text-red-500';
+    formStatus.className = 'success-message mt-4 p-4 rounded-md bg-red-900/50 text-red-200';
+    formStatus.classList.add('show');
     
     setTimeout(() => {
-        formStatus.textContent = '';
-    }, 3000);
+        formStatus.classList.remove('show');
+        setTimeout(() => {
+            formStatus.textContent = '';
+            formStatus.className = 'success-message mt-4 p-4 rounded-md text-center';
+        }, 500);
+    }, 4000);
 }
 
 function showFormSuccess(message) {
     const formStatus = document.getElementById('form-status');
     formStatus.textContent = message;
-    formStatus.className = 'mt-4 text-green-500';
+    formStatus.className = 'success-message mt-4 p-4 rounded-md bg-green-900/50 text-green-200';
+    formStatus.classList.add('show');
     
     setTimeout(() => {
-        formStatus.textContent = '';
-    }, 3000);
+        formStatus.classList.remove('show');
+        setTimeout(() => {
+            formStatus.textContent = '';
+            formStatus.className = 'success-message mt-4 p-4 rounded-md text-center';
+        }, 500);
+    }, 4000);
 }
 
 function isValidEmail(email) {
