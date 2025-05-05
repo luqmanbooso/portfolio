@@ -185,22 +185,36 @@ function setupContactForm() {
     
     if (!contactForm) return;
     
+    // Add input validation listeners for real-time feedback
+    const formInputs = contactForm.querySelectorAll('input, textarea');
+    formInputs.forEach(input => {
+        input.addEventListener('blur', () => validateField(input));
+        input.addEventListener('input', () => {
+            // Remove error styling when user starts typing again
+            if (input.classList.contains('border-red-500')) {
+                input.classList.remove('border-red-500');
+                const errorMessage = input.parentElement.querySelector('.error-message');
+                if (errorMessage) errorMessage.remove();
+            }
+        });
+    });
+    
     contactForm.addEventListener('submit', (event) => {
         event.preventDefault();
         
-        // Simple validation
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const subject = document.getElementById('subject').value.trim();
-        const message = document.getElementById('message').value.trim();
+        // Reset previous error states
+        clearFormErrors(contactForm);
         
-        if (!name || !email || !subject || !message) {
-            showFormError('Please fill in all fields');
-            return;
-        }
+        // Validate all form fields
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const subjectInput = document.getElementById('subject');
+        const messageInput = document.getElementById('message');
         
-        if (!isValidEmail(email)) {
-            showFormError('Please enter a valid email address');
+        const isValid = validateAllFields([nameInput, emailInput, subjectInput, messageInput]);
+        
+        if (!isValid) {
+            showFormError('Please fix the errors in the form');
             return;
         }
         
@@ -210,29 +224,132 @@ function setupContactForm() {
         
         // Prepare template parameters
         const templateParams = {
-            from_name: name,
-            from_email: email,
-            subject: subject,
-            message: message
+            from_name: nameInput.value.trim(),
+            from_email: emailInput.value.trim(),
+            subject: subjectInput.value.trim(),
+            message: messageInput.value.trim()
         };
         
-        // Send email using EmailJS
-        // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual EmailJS service and template IDs
-        emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
-            .then(function(response) {
-                console.log('Email sent successfully!', response.status, response.text);
-                showFormSuccess('Thank you! Your message has been sent successfully.');
-                contactForm.reset();
-            })
-            .catch(function(error) {
-                console.log('Failed to send email.', error);
-                showFormError('Failed to send message. Please try again later.');
-            })
-            .finally(function() {
-                // Remove loading state
-                submitBtn.classList.remove('submit-button-loading');
-                submitBtn.disabled = false;
-            });
+        // Send email using EmailJS or Web3Forms based on implementation
+        if (contactForm.getAttribute('action') && contactForm.getAttribute('action').includes('web3forms')) {
+            // The form is using Web3Forms - let it handle submission
+            contactForm.submit();
+        } else {
+            // Using EmailJS
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+                .then(function(response) {
+                    console.log('Email sent successfully!', response.status, response.text);
+                    showFormSuccess('Thank you! Your message has been sent successfully.');
+                    contactForm.reset();
+                })
+                .catch(function(error) {
+                    console.log('Failed to send email.', error);
+                    showFormError('Failed to send message. Please try again later.');
+                })
+                .finally(function() {
+                    // Remove loading state
+                    submitBtn.classList.remove('submit-button-loading');
+                    submitBtn.disabled = false;
+                });
+        }
+    });
+}
+
+// Validate a single form field
+function validateField(field) {
+    const value = field.value.trim();
+    let isValid = true;
+    let errorMessage = '';
+    
+    // Remove any existing error message
+    const existingError = field.parentElement.querySelector('.error-message');
+    if (existingError) existingError.remove();
+    
+    // Different validation rules based on field type
+    switch(field.id) {
+        case 'name':
+            if (!value) {
+                isValid = false;
+                errorMessage = 'Name is required';
+            } else if (value.length < 2) {
+                isValid = false;
+                errorMessage = 'Name must be at least 2 characters';
+            } else if (!/^[a-zA-Z\s'-]+$/.test(value)) {
+                isValid = false;
+                errorMessage = 'Please enter a valid name';
+            }
+            break;
+            
+        case 'email':
+            if (!value) {
+                isValid = false;
+                errorMessage = 'Email is required';
+            } else if (!isValidEmail(value)) {
+                isValid = false;
+                errorMessage = 'Please enter a valid email address';
+            }
+            break;
+            
+        case 'subject':
+            if (!value) {
+                isValid = false;
+                errorMessage = 'Subject is required';
+            } else if (value.length < 3) {
+                isValid = false;
+                errorMessage = 'Subject must be at least 3 characters';
+            }
+            break;
+            
+        case 'message':
+            if (!value) {
+                isValid = false;
+                errorMessage = 'Message is required';
+            } else if (value.length < 10) {
+                isValid = false;
+                errorMessage = 'Message must be at least 10 characters';
+            }
+            break;
+    }
+    
+    // Apply styling based on validation result
+    if (!isValid) {
+        field.classList.add('border-red-500');
+        field.classList.remove('border-primary-dark', 'border-green-500');
+        
+        // Add error message
+        const errorElement = document.createElement('p');
+        errorElement.className = 'error-message text-red-500 text-sm mt-1';
+        errorElement.textContent = errorMessage;
+        field.parentElement.appendChild(errorElement);
+    } else {
+        field.classList.add('border-green-500');
+        field.classList.remove('border-primary-dark', 'border-red-500');
+    }
+    
+    return isValid;
+}
+
+// Validate all fields in a form
+function validateAllFields(fields) {
+    let isValid = true;
+    
+    fields.forEach(field => {
+        if (!validateField(field)) {
+            isValid = false;
+        }
+    });
+    
+    return isValid;
+}
+
+// Clear all error messages and styling from the form
+function clearFormErrors(form) {
+    const errorMessages = form.querySelectorAll('.error-message');
+    errorMessages.forEach(msg => msg.remove());
+    
+    const inputs = form.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+        input.classList.remove('border-red-500');
     });
 }
 
@@ -267,6 +384,6 @@ function showFormSuccess(message) {
 }
 
 function isValidEmail(email) {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
