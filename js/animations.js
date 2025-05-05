@@ -22,6 +22,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Setup form field animations
     setupFormFieldAnimations();
+    
+    // Initialize enhanced typewriter effect
+    initTypewriter();
+    
+    // Setup 3D effect for profile image
+    setupProfileImageEffect();
 });
 
 // Animate counting up for statistics
@@ -58,57 +64,97 @@ function initCounters() {
     });
 }
 
-// Initialize typewriter effect
+// Enhanced typewriter effect with multiple phrases
 function initTypewriter() {
-    const typeElement = document.querySelector('.typewriter h1');
-    if (!typeElement) return;
+    const typewriterElement = document.getElementById('typewriter-text');
+    if (!typewriterElement) return;
     
     const phrases = [
-        'Hello World!',
-        'I build web applications.',
-        'I solve problems.',
-        'I create experiences.'
+        'IT Undergraduate',
+        'Software Developer',
+        'Problem Solver',
+        'Design Enthusiast',
+        'Continuous Learner'
     ];
+    
+    // Add cursor element
+    const cursorElement = document.createElement('span');
+    cursorElement.className = 'typewriter-cursor';
+    typewriterElement.parentNode.appendChild(cursorElement);
     
     let phraseIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
-    const typingSpeed = 100; // milliseconds
-    const deletingSpeed = 50; // milliseconds
-    const pauseEnd = 1000; // pause at the end of phrase
+    let isEnd = false;
     
-    function type() {
+    const typingSpeed = 100; // Speed for typing
+    const deletingSpeed = 50; // Speed for deleting
+    const waitAtEnd = 1500; // Wait time at end of phrase
+    const waitAtStart = 500; // Wait time at start of phrase
+    
+    function typeAnimation() {
         const currentPhrase = phrases[phraseIndex];
         
+        // Update position of cursor
+        const textWidth = typewriterElement.getBoundingClientRect().width;
+        cursorElement.style.transform = `translateX(${textWidth}px)`;
+        
         if (isDeleting) {
-            // Remove a character
-            typeElement.textContent = currentPhrase.substring(0, charIndex - 1);
+            // Remove character
+            typewriterElement.textContent = currentPhrase.substring(0, charIndex - 1);
             charIndex--;
         } else {
-            // Add a character
-            typeElement.textContent = currentPhrase.substring(0, charIndex + 1);
+            // Type character
+            typewriterElement.textContent = currentPhrase.substring(0, charIndex + 1);
             charIndex++;
         }
         
-        // Determine speed based on whether deleting or not
+        // Speed adjustments
         let typeSpeed = isDeleting ? deletingSpeed : typingSpeed;
         
-        // If complete phrase is typed
+        // If completed phrase
         if (!isDeleting && charIndex === currentPhrase.length) {
             // Pause at end of typing
-            typeSpeed = pauseEnd;
+            isEnd = true;
+            typeSpeed = waitAtEnd;
             isDeleting = true;
         } else if (isDeleting && charIndex === 0) {
             // Move to next phrase after deleting
             isDeleting = false;
             phraseIndex = (phraseIndex + 1) % phrases.length;
+            typeSpeed = waitAtStart;
         }
         
-        setTimeout(type, typeSpeed);
+        setTimeout(typeAnimation, typeSpeed);
     }
     
-    // Start the typing animation
-    setTimeout(type, 1000);
+    // Start typing animation with a slight delay
+    setTimeout(typeAnimation, 1000);
+}
+
+// Setup 3D perspective hover for profile image
+function setupProfileImageEffect() {
+    const profileContainer = document.querySelector('.profile-container');
+    if (!profileContainer) return;
+    
+    profileContainer.addEventListener('mousemove', (e) => {
+        const rect = profileContainer.getBoundingClientRect();
+        const x = e.clientX - rect.left; // Position within element
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        // Calculate rotation based on mouse position
+        const rotateX = (y - centerY) / 10 * -1; // Reverse Y-axis rotation
+        const rotateY = (x - centerX) / 10;
+        
+        profileContainer.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+    });
+    
+    profileContainer.addEventListener('mouseleave', () => {
+        profileContainer.style.transform = '';
+    });
 }
 
 // Setup scroll-triggered animations

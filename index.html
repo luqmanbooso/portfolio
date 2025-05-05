@@ -345,54 +345,88 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        <!-- Hero Section -->
-        <section id="home" class="w-full pt-32 pb-20 md:pt-40 md:pb-28">
-    <div class="container mx-auto px-6">
-        <div class="flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 animate-fade-in" style="animation-delay: 0.3s">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4">
-                    Hello, I'm <span class="text-primary-light dark:text-primary-dark glow">Luqman Booso</span>
-                </h1>
-                <div class="h-1 w-20 bg-primary-light dark:bg-primary-dark mb-6"></div>
-                <h2 class="text-2xl md:text-3xl font-medium mb-6">IT Undergraduate | Programmer</h2>
-                <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-lg">
-                    As an IT undergraduate at SLIIT, I possess a vast knowledge of programming and a solid foundation in information technology. I specialize in crafting efficient, user-centric solutions for real-world challenges.
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#projects" class="px-6 py-3 bg-primary-light dark:bg-primary-dark text-white rounded-md hover:bg-blue-700 dark:hover:bg-blue-500 transition-colors shadow-md">
-                        View My Work
-                    </a>
-                    <a href="#contact" class="px-6 py-3 border-2 border-gray-700 dark:border-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                        Let's Connect
-                    </a>
+        <!-- Hero Section with Enhanced Image and Typewriter -->
+        <section id="home" class="w-full pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 animate-fade-in" style="animation-delay: 0.3s">
+                        <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                            Hello, I'm <span class="text-primary-light dark:text-primary-dark glow">Luqman Booso</span>
+                        </h1>
+                        <div class="h-1 w-20 bg-primary-light dark:bg-primary-dark mb-6"></div>
+                        
+                        <!-- Typewriter effect container -->
+                        <div class="h-12 mb-6 overflow-hidden">
+                            <h2 id="typewriter-text" class="text-2xl md:text-3xl font-medium text-gray-600 dark:text-gray-300"></h2>
+                        </div>
+                        
+                        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-lg">
+                            As an IT undergraduate at SLIIT, I possess a vast knowledge of programming and a solid foundation in information technology. I specialize in crafting efficient, user-centric solutions for real-world challenges.
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="#projects" class="px-6 py-3 bg-primary-light dark:bg-primary-dark text-white rounded-md hover:bg-blue-700 dark:hover:bg-blue-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                                <span class="flex items-center">
+                                    <span>View My Work</span>
+                                    <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                                </span>
+                            </a>
+                            <a href="#contact" class="px-6 py-3 border-2 border-gray-700 dark:border-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 hover:-translate-y-1">
+                                Let's Connect
+                            </a>
+                        </div>
+                        <div class="flex mt-10 space-x-4">
+                            <a href="https://github.com/luqmanbooso" aria-label="GitHub" class="text-gray-600 dark:text-gray-400 hover:text-primary-light dark:hover:text-primary-dark transform transition-all duration-300 hover:scale-125">
+                                <i class="fab fa-github text-2xl"></i>
+                            </a>
+                            <a href="https://linkedin.com/in/luqmanbooso" aria-label="LinkedIn" class="text-gray-600 dark:text-gray-400 hover:text-primary-light dark:hover:text-primary-dark transform transition-all duration-300 hover:scale-125">
+                                <i class="fab fa-linkedin text-2xl"></i>
+                            </a>
+                            <a href="https://lukathegeek.blogspot.com/" aria-label="Blog" class="text-gray-600 dark:text-gray-400 hover:text-primary-light dark:hover:text-primary-dark transform transition-all duration-300 hover:scale-125">
+                                <i class="fas fa-blog text-2xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 mt-12 md:mt-0 flex justify-center animate-fade-in" style="animation-delay: 0.6s">
+                        <!-- Enhanced profile image container with floating tech icons and animation effects -->
+                        <div class="profile-container relative group transition-transform duration-500 hover:-translate-y-2">
+                            <!-- Spinning gradient background -->
+                            <div class="absolute -inset-4 rounded-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 opacity-75 blur-md animate-spin-slow"></div>
+                            
+                            <!-- Floating tech icons -->
+                            <div class="absolute -left-8 top-6 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center animate-float" style="animation-delay: 0s; z-index: 5;">
+                                <i class="fab fa-react text-white text-xl"></i>
+                            </div>
+                            <div class="absolute -right-4 top-12 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center animate-float" style="animation-delay: 1.5s; z-index: 5;">
+                                <i class="fab fa-node-js text-white text-xl"></i>
+                            </div>
+                            <div class="absolute right-10 -bottom-6 w-14 h-14 bg-yellow-500 rounded-full flex items-center justify-center animate-float" style="animation-delay: 0.7s; z-index: 5;">
+                                <i class="fab fa-js text-white text-xl"></i>
+                            </div>
+                            <div class="absolute -left-10 bottom-20 w-11 h-11 bg-purple-600 rounded-full flex items-center justify-center animate-float" style="animation-delay: 1.2s; z-index: 5;">
+                                <i class="fab fa-python text-white text-xl"></i>
+                            </div>
+                            
+                            <!-- Glowing ring -->
+                            <div class="absolute inset-0 rounded-full animate-pulse-ring"></div>
+                            
+                            <!-- Main image container -->
+                            <div class="relative z-10 rounded-full overflow-hidden transform transition-all duration-500 group-hover:scale-105 border-4 border-white dark:border-gray-800 group-hover:border-primary-dark shadow-2xl">
+                                <img src="js/images/profilefront.png" alt="Luqman Booso" class="rounded-full w-64 h-64 md:w-80 md:h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+                                
+                                <!-- Overlay on hover -->
+                                <div class="absolute inset-0 bg-gradient-to-tr from-primary-dark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="flex mt-10 space-x-4">
-                    <a href="https://github.com/luqmanbooso" aria-label="GitHub" class="text-gray-600 dark:text-gray-400 hover:text-primary-light dark:hover:text-primary-dark">
-                        <i class="fab fa-github text-2xl"></i>
-                    </a>
-                    <a href="https://linkedin.com/in/luqmanbooso" aria-label="LinkedIn" class="text-gray-600 dark:text-gray-400 hover:text-primary-light dark:hover:text-primary-dark">
-                        <i class="fab fa-linkedin text-2xl"></i>
-                    </a>
-                    <a href="https://lukathegeek.blogspot.com/" aria-label="Blog" class="text-gray-600 dark:text-gray-400 hover:text-primary-light dark:hover:text-primary-dark">
-                        <i class="fas fa-blog text-2xl"></i>
+                <div class="flex justify-center mt-16">
+                    <a href="#about" class="scroll-indicator text-4xl text-primary-light dark:text-primary-dark hover:text-primary-dark hover:dark:text-primary-light transition-colors">
+                        <i class="fas fa-chevron-down"></i>
                     </a>
                 </div>
             </div>
-            <div class="md:w-1/2 mt-12 md:mt-0 flex justify-center animate-fade-in" style="animation-delay: 0.6s">
-                <div class="relative">
-                    <div class="absolute -inset-1 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 opacity-70 blur"></div>
-                    <img src="js/images/profilefront.png" alt="Luqman Booso" class="rounded-full w-64 h-64 md:w-80 md:h-80 object-cover relative z-10 border-4 border-white dark:border-gray-800">
-                </div>
-            </div>
-        </div>
-        <div class="flex justify-center mt-16">
-            <a href="#about" class="scroll-indicator text-4xl text-primary-light dark:text-primary-dark">
-                <i class="fas fa-chevron-down"></i>
-            </a>
-        </div>
-    </div>
-</section>
-
+        </section>
+        
         <!-- About Section -->
         <section id="about" class="w-full py-20 bg-gray-50 dark:bg-gray-800 theme-transition">
     <div class="container mx-auto px-6">
@@ -405,16 +439,21 @@
                 <img src="js/images/profile.png" alt="Luqman Booso" class="rounded-lg shadow-xl w-full object-cover h-auto">
             </div>
             <div class="md:w-3/5" data-aos="fade-left" data-aos-delay="200">
-                <h3 class="text-xl md:text-2xl font-semibold mb-4">IT Undergraduate & Programmer</h3>
+                <h3 class="text-3xl md:text-2xl font-semibold mb-4">Hi, I'm Luqman Booso.</h3>
                 <p class="text-gray-700 dark:text-gray-300 mb-5">
-                    I am currently pursuing a degree in Computer Software Engineering at SLIIT. My academic journey has equipped me with a strong foundation in programming and analytical skills, enabling me to tackle complex challenges in the tech industry.
+                    
+                     I am currently pursuing a degree in Computer Software Engineering at SLIIT. My academic journey has provided me with a solid foundation in programming and analytical skills, enabling me to address complex challenges in the tech industry.
                 </p>
                 <p class="text-gray-700 dark:text-gray-300 mb-5">
-                    My projects include <strong>BuildMart</strong>, an auction and procurement system for the construction industry, and <strong>Boutique</strong>, a Java-based hotel management system. These experiences have honed my skills in technologies like MongoDB, Express.js, Java, and Eclipse.
+                    Through various projects, I have gained hands-on experience with technologies such as MongoDB, Express.js, Java, and Eclipse. These experiences have sharpened my problem-solving abilities and enhanced my technical expertise.
                 </p>
                 <p class="text-gray-700 dark:text-gray-300 mb-6">
-                    Beyond academics, I am passionate about blogging and sharing knowledge through my blog, <a href="https://lukathegeek.blogspot.com/" class="text-primary-light dark:text-primary-dark hover:underline">Luka the Geek</a>. I am also an active contributor to open-source projects and enjoy collaborating with like-minded individuals.
+                    Outside of academics, I am passionate about blogging and sharing insights on the tech world through my blog, <a href="https://lukathegeek.blogspot.com/" class="text-primary-light dark:text-primary-dark hover:underline">Luka the Geek</a>. I am also an active contributor to open-source projects and enjoy collaborating with like-minded individuals who share a similar passion for technology.
                 </p>
+                <p class="text-gray-700 dark:text-gray-300 mb-6">
+                    Currently, I am expanding my knowledge in SQL and analytical skills while working on enhancing my technical certifications and project portfolio. I am always eager to learn and grow in this dynamic field.
+                </p>
+                
                 <div class="grid grid-cols-2 gap-4 mb-8">
                     <div class="flex items-center">
                         <i class="fas fa-graduation-cap text-primary-light dark:text-primary-dark mr-2"></i>
@@ -667,30 +706,16 @@
                     <i class="fas fa-cogs text-2xl mb-2 text-primary-light dark:text-primary-dark"></i>
                     <span>RESTful APIs</span>
                 </div>
-                <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 flex flex-col items-center">
-                    <i class="fab fa-aws text-2xl mb-2 text-primary-light dark:text-primary-dark"></i>
-                    <span>AWS Services</span>
-                </div>
+                
                 <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 flex flex-col items-center">
                     <i class="fas fa-mobile-alt text-2xl mb-2 text-primary-light dark:text-primary-dark"></i>
                     <span>Responsive Design</span>
                 </div>
                 <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 flex flex-col items-center">
-                    <i class="fas fa-shield-alt text-2xl mb-2 text-primary-light dark:text-primary-dark"></i>
-                    <span>Security Best Practices</span>
-                </div>
-                <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 flex flex-col items-center">
                     <i class="fas fa-tachometer-alt text-2xl mb-2 text-primary-light dark:text-primary-dark"></i>
                     <span>Performance Optimization</span>
                 </div>
-                <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 flex flex-col items-center">
-                    <i class="fas fa-code-branch text-2xl mb-2 text-primary-light dark:text-primary-dark"></i>
-                    <span>CI/CD Pipelines</span>
-                </div>
-                <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 flex flex-col items-center">
-                    <i class="fas fa-flask text-2xl mb-2 text-primary-light dark:text-primary-dark"></i>
-                    <span>Testing (Jest, JUnit)</span>
-                </div>
+                
             </div>
         </div>
     </div>
