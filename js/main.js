@@ -387,3 +387,9 @@ function isValidEmail(email) {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
+
+// Add this at the end of your main.js file
+// Load chatbot script
+const chatbotScript = document.createElement('script');
+chatbotScript.src = 'js/chatbot.js';
+document.body.appendChild(chatbotScript);
