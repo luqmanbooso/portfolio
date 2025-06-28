@@ -64,72 +64,122 @@ function initCounters() {
     });
 }
 
-// Enhanced typewriter effect with multiple phrases
+// Enhanced typewriter effect with multiple phrases and smooth animations
 function initTypewriter() {
     const typewriterElement = document.getElementById('typewriter-text');
     if (!typewriterElement) return;
     
     const phrases = [
-        'IT Undergraduate',
-        'Software Developer',
-        'Problem Solver',
-        'Design Enthusiast',
-        'Continuous Learner'
+        '> initializing_developer.exe...',
+        '> const role = "Full Stack Developer";',
+        '> let passion = "Creating Solutions";',
+        '> while(learning) { improve(); }',
+        '> console.log("Ready to Code!");',
+        '> import { creativity } from "mind";',
+        '> function buildDreams() { return true; }'
     ];
     
-    // Add cursor element
+    // Create typing container and cursor
+    typewriterElement.classList.add('typing-container');
+    typewriterElement.innerHTML = '';
+    
     const cursorElement = document.createElement('span');
     cursorElement.className = 'typewriter-cursor';
-    typewriterElement.parentNode.appendChild(cursorElement);
+    typewriterElement.appendChild(cursorElement);
     
     let phraseIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
-    let isEnd = false;
     
-    const typingSpeed = 100; // Speed for typing
-    const deletingSpeed = 50; // Speed for deleting
-    const waitAtEnd = 1500; // Wait time at end of phrase
-    const waitAtStart = 500; // Wait time at start of phrase
+    const typingSpeed = 60; // Base typing speed
+    const deletingSpeed = 30; // Base deleting speed
+    const waitAtEnd = 2000; // Wait time at end of phrase
+    const waitAtStart = 800; // Wait time at start of phrase
+    
+    function getRandomSpeed(baseSpeed) {
+        // Add randomness for more natural typing
+        return baseSpeed + Math.random() * 40 - 20;
+    }
+    
+    function createCharSpan(char) {
+        const span = document.createElement('span');
+        span.textContent = char;
+        span.className = 'typing-char';
+        return span;
+    }
     
     function typeAnimation() {
         const currentPhrase = phrases[phraseIndex];
-        
-        // Update position of cursor
-        const textWidth = typewriterElement.getBoundingClientRect().width;
-        cursorElement.style.transform = `translateX(${textWidth}px)`;
+        const textContainer = typewriterElement;
         
         if (isDeleting) {
-            // Remove character
-            typewriterElement.textContent = currentPhrase.substring(0, charIndex - 1);
-            charIndex--;
+            // Remove character with animation
+            const chars = textContainer.querySelectorAll('.typing-char');
+            if (chars.length > 0) {
+                const lastChar = chars[chars.length - 1];
+                lastChar.classList.add('deleting-char');
+                
+                setTimeout(() => {
+                    if (lastChar.parentNode) {
+                        lastChar.remove();
+                    }
+                }, 50);
+                
+                charIndex--;
+            }
         } else {
-            // Type character
-            typewriterElement.textContent = currentPhrase.substring(0, charIndex + 1);
-            charIndex++;
+            // Type character with animation
+            if (charIndex < currentPhrase.length) {
+                const char = currentPhrase[charIndex];
+                const charSpan = createCharSpan(char);
+                
+                // Insert before cursor
+                textContainer.insertBefore(charSpan, cursorElement);
+                
+                // Trigger animation
+                setTimeout(() => {
+                    charSpan.style.animationDelay = '0s';
+                }, 10);
+                
+                charIndex++;
+            }
         }
         
-        // Speed adjustments
-        let typeSpeed = isDeleting ? deletingSpeed : typingSpeed;
+        // Determine next action and speed
+        let nextSpeed;
         
-        // If completed phrase
         if (!isDeleting && charIndex === currentPhrase.length) {
-            // Pause at end of typing
-            isEnd = true;
-            typeSpeed = waitAtEnd;
+            // Finished typing, wait then start deleting
+            nextSpeed = waitAtEnd;
             isDeleting = true;
         } else if (isDeleting && charIndex === 0) {
-            // Move to next phrase after deleting
+            // Finished deleting, move to next phrase
             isDeleting = false;
             phraseIndex = (phraseIndex + 1) % phrases.length;
-            typeSpeed = waitAtStart;
+            nextSpeed = waitAtStart;
+        } else {
+            // Continue typing or deleting
+            nextSpeed = getRandomSpeed(isDeleting ? deletingSpeed : typingSpeed);
         }
         
-        setTimeout(typeAnimation, typeSpeed);
+        setTimeout(typeAnimation, nextSpeed);
     }
     
-    // Start typing animation with a slight delay
-    setTimeout(typeAnimation, 1000);
+    // Add glow effect to cursor
+    function enhanceCursor() {
+        const cursor = typewriterElement.querySelector('.typewriter-cursor');
+        if (cursor) {
+            cursor.addEventListener('animationiteration', () => {
+                cursor.style.filter = `hue-rotate(${Math.random() * 60}deg)`;
+            });
+        }
+    }
+    
+    // Start animation
+    setTimeout(() => {
+        typeAnimation();
+        enhanceCursor();
+    }, 1000);
 }
 
 // Setup 3D perspective hover for profile image
