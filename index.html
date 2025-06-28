@@ -8,27 +8,37 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', 'monospace'],
+                        'code': ['Fira Code', 'JetBrains Mono', 'monospace'],
+                    },
                     colors: {
                         primary: {
-                            light: '#3B82F6', // blue-500
-                            dark: '#60A5FA', // blue-400
+                            light: '#00ff88', // coding green
+                            dark: '#00ff88', // coding green
+                        },
+                        terminal: {
+                            bg: '#0a0e1a',
+                            border: '#1a1f2e',
+                            text: '#00ff88',
                         },
                         background: {
                             light: '#F9FAFB', // gray-50
-                            dark: '#111827', // gray-900
+                            dark: '#0a0e1a', // dark coding background
                         },
                         card: {
                             light: '#FFFFFF', // white
-                            dark: '#1F2937', // gray-800
+                            dark: '#1a1f2e', // gray-800
                         },
                         text: {
                             light: '#1F2937', // gray-800
-                            dark: '#F9FAFB', // gray-50
+                            dark: '#e2e8f0', // gray-50
                         }
                     },
                     animation: {
@@ -277,82 +287,99 @@
         }
     </style>
 </head>
-<body class="bg-background-dark text-text-dark">
+<body class="bg-terminal-bg text-text-dark font-mono">
     <!-- Background Elements -->
     <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div class="absolute top-20 left-10 w-64 h-64 bg-blue-900 rounded-full mix-blend-soft-light filter blur-3xl opacity-20 animate-float"></div>
-        <div class="absolute top-40 right-20 w-72 h-72 bg-purple-900 rounded-full mix-blend-soft-light filter blur-3xl opacity-20 animate-float" style="animation-delay: 2s"></div>
-        <div class="absolute bottom-40 left-1/4 w-96 h-96 bg-pink-900 rounded-full mix-blend-soft-light filter blur-3xl opacity-20 animate-float" style="animation-delay: 4s"></div>
+        <div class="absolute top-20 left-10 w-64 h-64 bg-terminal-text/10 rounded-full mix-blend-soft-light filter blur-3xl opacity-20 animate-float"></div>
+        <div class="absolute top-40 right-20 w-72 h-72 bg-blue-500/10 rounded-full mix-blend-soft-light filter blur-3xl opacity-20 animate-float" style="animation-delay: 2s"></div>
+        <div class="absolute bottom-40 left-1/4 w-96 h-96 bg-red-500/10 rounded-full mix-blend-soft-light filter blur-3xl opacity-20 animate-float" style="animation-delay: 4s"></div>
+        
+        <!-- Code grid background -->
+        <div class="absolute inset-0 opacity-5" style="background-image: linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px); background-size: 50px 50px;"></div>
     </div>
 
     <!-- Enhanced Navigation -->
-<header class="fixed w-full z-50 backdrop-blur-md bg-gray-900/90 shadow-lg theme-transition border-b border-gray-800">
+<header class="fixed w-full z-50 navbar-terminal shadow-2xl theme-transition">
     <div class="container mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-blue-300">
-                    <span class="relative inline-block">
-                        Luqman Booso
-                        <span class="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
+                <div class="flex items-center space-x-2">
+                    <span class="text-terminal-text text-sm font-mono">$</span>
+                    <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-terminal-text to-blue-400 font-mono">
+                        <span class="relative inline-block">
+                            ./luqman-booso
+                            <span class="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-terminal-text to-red-500 transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
+                        </span>
                     </span>
-                </span>
-                <span class="animate-wave inline-block ml-1">👋</span>
+                    <span class="animate-wave inline-block ml-1">�</span>
+                </div>
             </div>
             
             <div class="flex items-center gap-6">
-                <nav class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="nav-link py-2 px-1 font-medium text-text-dark hover:text-primary-dark transition-colors relative">Home</a>
-                    <a href="#about" class="nav-link py-2 px-1 font-medium text-text-dark hover:text-primary-dark transition-colors relative">About</a>
-                    <a href="#projects" class="nav-link py-2 px-1 font-medium text-text-dark hover:text-primary-dark transition-colors relative">Projects</a>
-                    <a href="#skills" class="nav-link py-2 px-1 font-medium text-text-dark hover:text-primary-dark transition-colors relative">Skills</a>
-                    <a href="#contact" class="ml-2 px-5 py-2 bg-primary-dark text-white rounded-full hover:bg-blue-500 transition-colors shadow-sm">Contact</a>
+                <nav class="hidden md:flex items-center space-x-2">
+                    <a href="#home" class="nav-link-terminal py-2 px-3 font-medium text-text-dark hover:text-terminal-text transition-all relative">
+                        <i class="fas fa-terminal mr-2"></i>home
+                    </a>
+                    <a href="#about" class="nav-link-terminal py-2 px-3 font-medium text-text-dark hover:text-terminal-text transition-all relative">
+                        <i class="fas fa-user-cog mr-2"></i>about
+                    </a>
+                    <a href="#projects" class="nav-link-terminal py-2 px-3 font-medium text-text-dark hover:text-terminal-text transition-all relative">
+                        <i class="fas fa-code-branch mr-2"></i>projects
+                    </a>
+                    <a href="#skills" class="nav-link-terminal py-2 px-3 font-medium text-text-dark hover:text-terminal-text transition-all relative">
+                        <i class="fas fa-laptop-code mr-2"></i>skills
+                    </a>
+                    <a href="#contact" class="ml-2 px-5 py-2 bg-gradient-to-r from-terminal-text to-blue-500 text-black rounded-lg hover:from-blue-500 hover:to-terminal-text transition-all shadow-lg hover:shadow-xl hover:shadow-terminal-text/20 font-mono font-semibold">
+                        <i class="fas fa-paper-plane mr-2"></i>contact()
+                    </a>
                 </nav>
-                <button id="menuBtn" class="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors">
-                    <i class="fas fa-bars text-lg"></i>
+                <button id="menuBtn" class="md:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-terminal-border hover:bg-gray-700 transition-colors border border-terminal-text/20">
+                    <i class="fas fa-bars text-lg text-terminal-text"></i>
                 </button>
             </div>
         </div>
     </div>
     
     <!-- Mobile Menu with Enhanced Styling -->
-    <div id="mobileMenu" class="mobile-menu fixed top-0 left-0 h-full w-72 bg-gray-900 p-6 md:hidden shadow-2xl theme-transition z-50">
-        <div class="flex justify-between items-center mb-8 pb-4 border-b border-gray-700">
-            <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">Luqman Booso</span>
-            <button id="closeMenu" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-800 text-white hover:bg-gray-700 transition-colors">
+    <div id="mobileMenu" class="mobile-menu fixed top-0 left-0 h-full w-72 bg-terminal-bg p-6 md:hidden shadow-2xl theme-transition z-50 border-r-2 border-terminal-text">
+        <div class="flex justify-between items-center mb-8 pb-4 border-b border-terminal-border">
+            <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-terminal-text to-blue-400 font-mono">./luqman-booso</span>
+            <button id="closeMenu" class="w-8 h-8 flex items-center justify-center rounded-lg bg-terminal-border text-terminal-text hover:bg-gray-700 transition-colors">
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        <nav class="flex flex-col space-y-5">
-            <a href="#home" class="flex items-center py-2 px-4 rounded-lg hover:bg-gray-800 transition-colors">
-                <i class="fas fa-home mr-3 text-primary-dark"></i>
-                <span>Home</span>
+        <nav class="flex flex-col space-y-3">
+            <a href="#home" class="flex items-center py-3 px-4 rounded-lg hover:bg-terminal-border transition-colors font-mono">
+                <i class="fas fa-terminal mr-3 text-terminal-text"></i>
+                <span class="text-gray-300">home</span>
             </a>
-            <a href="#about" class="flex items-center py-2 px-4 rounded-lg hover:bg-gray-800 transition-colors">
-                <i class="fas fa-user mr-3 text-primary-dark"></i>
-                <span>About</span>
+            <a href="#about" class="flex items-center py-3 px-4 rounded-lg hover:bg-terminal-border transition-colors font-mono">
+                <i class="fas fa-user-cog mr-3 text-terminal-text"></i>
+                <span class="text-gray-300">about</span>
             </a>
-            <a href="#projects" class="flex items-center py-2 px-4 rounded-lg hover:bg-gray-800 transition-colors">
-                <i class="fas fa-briefcase mr-3 text-primary-dark"></i>
-                <span>Projects</span>
+            <a href="#projects" class="flex items-center py-3 px-4 rounded-lg hover:bg-terminal-border transition-colors font-mono">
+                <i class="fas fa-code-branch mr-3 text-terminal-text"></i>
+                <span class="text-gray-300">projects</span>
             </a>
-            <a href="#skills" class="flex items-center py-2 px-4 rounded-lg hover:bg-gray-800 transition-colors">
-                <i class="fas fa-code mr-3 text-primary-dark"></i>
-                <span>Skills</span>
+            <a href="#skills" class="flex items-center py-3 px-4 rounded-lg hover:bg-terminal-border transition-colors font-mono">
+                <i class="fas fa-laptop-code mr-3 text-terminal-text"></i>
+                <span class="text-gray-300">skills</span>
             </a>
-            <a href="#contact" class="flex items-center py-2 px-4 rounded-lg hover:bg-gray-800 transition-colors">
-                <i class="fas fa-envelope mr-3 text-primary-dark"></i>
-                <span>Contact</span>
+            <a href="#contact" class="flex items-center py-3 px-4 rounded-lg hover:bg-terminal-border transition-colors font-mono">
+                <i class="fas fa-paper-plane mr-3 text-terminal-text"></i>
+                <span class="text-gray-300">contact</span>
             </a>
         </nav>
-        <div class="mt-10 pt-6 border-t border-gray-700">
-            <div class="flex space-x-5 justify-center">
-                <a href="https://github.com/luqmanbooso" class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white transition-colors">
+        <div class="mt-10 pt-6 border-t border-terminal-border">
+            <div class="text-center text-sm text-gray-500 font-mono mb-4">// connect</div>
+            <div class="flex space-x-4 justify-center">
+                <a href="https://github.com/luqmanbooso" class="w-10 h-10 flex items-center justify-center rounded-lg bg-terminal-border text-gray-400 hover:bg-terminal-text hover:text-black transition-all">
                     <i class="fab fa-github"></i>
                 </a>
-                <a href="https://linkedin.com/in/luqmanbooso" class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white transition-colors">
+                <a href="https://linkedin.com/in/luqmanbooso" class="w-10 h-10 flex items-center justify-center rounded-lg bg-terminal-border text-gray-400 hover:bg-terminal-text hover:text-black transition-all">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
-                <a href="https://lukathegeek.blogspot.com/" class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white transition-colors">
+                <a href="https://lukathegeek.blogspot.com/" class="w-10 h-10 flex items-center justify-center rounded-lg bg-terminal-border text-gray-400 hover:bg-terminal-text hover:text-black transition-all">
                     <i class="fas fa-blog"></i>
                 </a>
             </div>
@@ -371,82 +398,125 @@
     <!-- Main Content -->
     <main class="main-content">
         <!-- Hero Section with Enhanced Image and Typewriter -->
-        <section id="home" class="w-full pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
-            <div class="container mx-auto px-6">
+        <section id="home" class="w-full pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden relative">
+            <!-- Code matrix background -->
+            <div class="absolute inset-0 opacity-10">
+                <div class="code-rain"></div>
+            </div>
+            
+            <div class="container mx-auto px-6 relative z-10">
                 <div class="flex flex-col md:flex-row items-center">
                     <div class="md:w-1/2 animate-fade-in" style="animation-delay: 0.3s">
-                        <h1 class="text-4xl md:text-6xl font-bold mb-4">
-                            Hello, I'm <span class="text-primary-light dark:text-primary-dark glow">Luqman Booso</span>
+                        <!-- Terminal-style header -->
+                        <div class="bg-terminal-bg border border-terminal-border rounded-lg p-6 mb-8 font-mono">
+                            <div class="flex items-center mb-4">
+                                <div class="flex space-x-2 mr-4">
+                                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                                </div>
+                                <span class="text-gray-400 text-sm">portfolio.dev — bash</span>
+                            </div>
+                            <div class="text-terminal-text">
+                                <span class="text-gray-400">$</span> whoami<br>
+                                <span class="animate-code-glow">Luqman Booso</span><br>
+                                <span class="text-gray-400">$</span> cat role.txt<br>
+                                <div class="h-8 overflow-hidden">
+                                    <span id="typewriter-text" class="text-terminal-text animate-code-glow"></span>
+                                    <span class="typewriter-cursor"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h1 class="text-4xl md:text-6xl font-bold mb-6 font-mono">
+                            <span class="text-gray-300">const</span> 
+                            <span class="text-terminal-text animate-code-glow">developer</span> 
+                            <span class="text-gray-300">=</span> {<br>
+                            <span class="ml-8 text-blue-400">name:</span> 
+                            <span class="text-green-400">"Luqman Booso"</span>,<br>
+                            <span class="ml-8 text-blue-400">passion:</span> 
+                            <span class="text-green-400">"Code & Innovation"</span><br>
+                            <span class="text-gray-300">}</span>
                         </h1>
-                        <div class="h-1 w-20 bg-primary-light dark:bg-primary-dark mb-6"></div>
                         
-                        <!-- Typewriter effect container -->
-                        <div class="h-12 mb-6 overflow-hidden">
-                            <h2 id="typewriter-text" class="text-2xl md:text-3xl font-medium text-gray-600 dark:text-gray-300"></h2>
-                        </div>
-                        
-                        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-lg">
-                            As an IT undergraduate at SLIIT, I possess a vast knowledge of programming and a solid foundation in information technology. I specialize in crafting efficient, user-centric solutions for real-world challenges.
+                        <p class="text-lg text-gray-400 mb-8 max-w-lg font-code">
+                            <span class="text-gray-500">/*</span><br>
+                            <span class="ml-4">IT undergraduate at SLIIT with expertise in</span><br>
+                            <span class="ml-4">full-stack development, crafting efficient</span><br>
+                            <span class="ml-4">solutions for real-world challenges.</span><br>
+                            <span class="text-gray-500">*/</span>
                         </p>
+                        
                         <div class="flex flex-wrap gap-4">
-                            <a href="#projects" class="px-6 py-3 bg-primary-light dark:bg-primary-dark text-white rounded-md hover:bg-blue-700 dark:hover:bg-blue-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                                <span class="flex items-center">
-                                    <span>View My Work</span>
-                                    <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
-                                </span>
+                            <a href="#projects" class="group btn btn-primary">
+                                <i class="fas fa-code mr-2"></i>
+                                <span>viewProjects()</span>
                             </a>
-                            <a href="#contact" class="px-6 py-3 border-2 border-gray-700 dark:border-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 hover:-translate-y-1">
-                                Let's Connect
+                            <a href="#contact" class="group btn btn-outline">
+                                <i class="fas fa-terminal mr-2"></i>
+                                <span>connect --now</span>
                             </a>
                         </div>
-                        <div class="flex mt-10 space-x-4">
-                            <a href="https://github.com/luqmanbooso" aria-label="GitHub" class="text-gray-600 dark:text-gray-400 hover:text-primary-light dark:hover:text-primary-dark transform transition-all duration-300 hover:scale-125">
+                        
+                        <div class="flex mt-10 space-x-6">
+                            <div class="text-gray-500 font-mono text-sm">// find me on:</div>
+                        </div>
+                        <div class="flex mt-4 space-x-4">
+                            <a href="https://github.com/luqmanbooso" aria-label="GitHub" class="social-link-terminal">
                                 <i class="fab fa-github text-2xl"></i>
                             </a>
-                            <a href="https://linkedin.com/in/luqmanbooso" aria-label="LinkedIn" class="text-gray-600 dark:text-gray-400 hover:text-primary-light dark:hover:text-primary-dark transform transition-all duration-300 hover:scale-125">
+                            <a href="https://linkedin.com/in/luqmanbooso" aria-label="LinkedIn" class="social-link-terminal">
                                 <i class="fab fa-linkedin text-2xl"></i>
                             </a>
-                            <a href="https://lukathegeek.blogspot.com/" aria-label="Blog" class="text-gray-600 dark:text-gray-400 hover:text-primary-light dark:hover:text-primary-dark transform transition-all duration-300 hover:scale-125">
+                            <a href="https://lukathegeek.blogspot.com/" aria-label="Blog" class="social-link-terminal">
                                 <i class="fas fa-blog text-2xl"></i>
                             </a>
                         </div>
                     </div>
+                    
                     <div class="md:w-1/2 mt-12 md:mt-0 flex justify-center animate-fade-in" style="animation-delay: 0.6s">
-                        <!-- Enhanced profile image container with floating tech icons and animation effects -->
-                        <div class="profile-container relative group transition-transform duration-500 hover:-translate-y-2">
-                            <!-- Spinning gradient background -->
-                            <div class="absolute -inset-4 rounded-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 opacity-75 blur-md animate-spin-slow"></div>
+                        <!-- Enhanced profile image container with coding elements -->
+                        <div class="profile-container relative group">
+                            <!-- Holographic border effect -->
+                            <div class="absolute -inset-4 bg-gradient-to-r from-terminal-text via-blue-500 to-red-500 rounded-lg opacity-30 blur-md animate-pulse-ring"></div>
                             
-                            <!-- Floating tech icons -->
-                            <div class="absolute -left-8 top-6 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center animate-float" style="animation-delay: 0s; z-index: 5;">
-                                <i class="fab fa-react text-white text-xl"></i>
+                            <!-- Floating code elements -->
+                            <div class="absolute -left-8 top-6 w-12 h-12 bg-terminal-bg border border-terminal-text rounded-lg flex items-center justify-center animate-float font-mono text-terminal-text" style="animation-delay: 0s; z-index: 5;">
+                                {'</>'}
                             </div>
-                            <div class="absolute -right-4 top-12 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center animate-float" style="animation-delay: 1.5s; z-index: 5;">
-                                <i class="fab fa-node-js text-white text-xl"></i>
+                            <div class="absolute -right-4 top-12 w-10 h-10 bg-terminal-bg border border-blue-500 rounded-lg flex items-center justify-center animate-float font-mono text-blue-500" style="animation-delay: 1.5s; z-index: 5;">
+                                {'{}'}
                             </div>
-                            <div class="absolute right-10 -bottom-6 w-14 h-14 bg-yellow-500 rounded-full flex items-center justify-center animate-float" style="animation-delay: 0.7s; z-index: 5;">
-                                <i class="fab fa-js text-white text-xl"></i>
+                            <div class="absolute right-10 -bottom-6 w-14 h-14 bg-terminal-bg border border-red-500 rounded-lg flex items-center justify-center animate-float font-mono text-red-500" style="animation-delay: 0.7s; z-index: 5;">
+                                {'[]'}
                             </div>
-                            <div class="absolute -left-10 bottom-20 w-11 h-11 bg-purple-600 rounded-full flex items-center justify-center animate-float" style="animation-delay: 1.2s; z-index: 5;">
-                                <i class="fab fa-python text-white text-xl"></i>
+                            <div class="absolute -left-10 bottom-20 w-11 h-11 bg-terminal-bg border border-purple-500 rounded-lg flex items-center justify-center animate-float font-mono text-purple-500" style="animation-delay: 1.2s; z-index: 5;">
+                                {'()'}
                             </div>
-                            
-                            <!-- Glowing ring -->
-                            <div class="absolute inset-0 rounded-full animate-pulse-ring"></div>
                             
                             <!-- Main image container -->
-                            <div class="relative z-10 rounded-full overflow-hidden transform transition-all duration-500 group-hover:scale-105 border-4 border-white dark:border-gray-800 group-hover:border-primary-dark shadow-2xl">
-                                <img src="js/images/profilefront.png" alt="Luqman Booso" class="rounded-full w-64 h-64 md:w-80 md:h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="relative z-10 rounded-lg overflow-hidden transform transition-all duration-500 group-hover:scale-105 border-2 border-terminal-text shadow-2xl">
+                                <img src="js/images/profilefront.png" alt="Luqman Booso" class="w-64 h-64 md:w-80 md:h-80 object-cover transition-transform duration-700 group-hover:scale-110">
                                 
-                                <!-- Overlay on hover -->
-                                <div class="absolute inset-0 bg-gradient-to-tr from-primary-dark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <!-- Code overlay on hover -->
+                                <div class="absolute inset-0 bg-terminal-bg/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    <div class="text-terminal-text font-mono text-center">
+                                        <div class="text-lg">console.log("Hello, World!");</div>
+                                        <div class="text-sm mt-2 text-gray-400">// Ready to code</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Scroll indicator -->
                 <div class="flex justify-center mt-16">
-                    <a href="#about" class="scroll-indicator text-4xl text-primary-light dark:text-primary-dark hover:text-primary-dark hover:dark:text-primary-light transition-colors">
-                        <i class="fas fa-chevron-down"></i>
+                    <a href="#about" class="scroll-indicator text-3xl text-terminal-text hover:text-blue-400 transition-colors font-mono">
+                        <div class="flex flex-col items-center">
+                            <span class="text-sm mb-2">// scroll down</span>
+                            <i class="fas fa-chevron-down animate-bounce"></i>
+                        </div>
                     </a>
                 </div>
             </div>
