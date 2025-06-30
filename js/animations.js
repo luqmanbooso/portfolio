@@ -278,48 +278,168 @@ function setupHoverAnimations() {
     });
 }
 
-// Setup custom cursor
+// Setup custom coding-themed cursor
 function setupCustomCursor() {
+    // Create main cursor element with terminal styling
     const cursor = document.createElement('div');
-    cursor.className = 'fixed w-8 h-8 rounded-full border-2 border-primary-light dark:border-primary-dark pointer-events-none z-50 transform -translate-x-1/2 -translate-y-1/2 mix-blend-difference hidden md:block';
+    cursor.className = 'fixed pointer-events-none z-50 transform -translate-x-1/2 -translate-y-1/2 hidden md:block transition-all duration-200 ease-out';
+    cursor.style.cssText = `
+        width: 20px;
+        height: 20px;
+        border: 2px solid #60A5FA;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(4px);
+        box-shadow: 
+            0 0 10px rgba(96, 165, 250, 0.5),
+            inset 0 0 10px rgba(96, 165, 250, 0.2);
+    `;
     document.body.appendChild(cursor);
     
+    // Create cursor dot with terminal green
     const cursorDot = document.createElement('div');
-    cursorDot.className = 'fixed w-2 h-2 bg-primary-light dark:bg-primary-dark rounded-full pointer-events-none z-50 transform -translate-x-1/2 -translate-y-1/2 hidden md:block';
+    cursorDot.className = 'fixed pointer-events-none z-50 transform -translate-x-1/2 -translate-y-1/2 hidden md:block transition-all duration-100';
+    cursorDot.style.cssText = `
+        width: 4px;
+        height: 4px;
+        background: #10B981;
+        border-radius: 50%;
+        box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+    `;
     document.body.appendChild(cursorDot);
     
+    // Create cursor text for hover states
+    const cursorText = document.createElement('div');
+    cursorText.className = 'fixed pointer-events-none z-50 transform -translate-x-1/2 -translate-y-1/2 hidden md:block font-mono text-xs text-blue-400 opacity-0 transition-all duration-200';
+    cursorText.style.cssText = `
+        font-family: 'JetBrains Mono', 'Fira Code', monospace;
+        margin-top: 25px;
+        background: rgba(0, 0, 0, 0.9);
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(96, 165, 250, 0.3);
+        font-size: 10px;
+        white-space: nowrap;
+    `;
+    document.body.appendChild(cursorText);
+    
+    // Mouse move handler
     document.addEventListener('mousemove', e => {
         cursor.style.left = `${e.clientX}px`;
         cursor.style.top = `${e.clientY}px`;
         
         cursorDot.style.left = `${e.clientX}px`;
         cursorDot.style.top = `${e.clientY}px`;
+        
+        cursorText.style.left = `${e.clientX}px`;
+        cursorText.style.top = `${e.clientY}px`;
     });
     
-    // Add hover effect to links and buttons
-    const links = document.querySelectorAll('a, button');
+    // Enhanced hover effects for different elements
+    const links = document.querySelectorAll('a');
+    const buttons = document.querySelectorAll('button');
+    const inputs = document.querySelectorAll('input, textarea');
+    const codeElements = document.querySelectorAll('code, pre');
+    
+    // Links hover effect
     links.forEach(link => {
         link.addEventListener('mouseenter', () => {
-            cursor.classList.add('scale-150');
+            cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            cursor.style.borderColor = '#10B981';
+            cursor.style.boxShadow = '0 0 15px rgba(16, 185, 129, 0.7), inset 0 0 15px rgba(16, 185, 129, 0.3)';
+            cursorText.textContent = '> click';
+            cursorText.style.opacity = '1';
+            cursorDot.style.background = '#60A5FA';
         });
         
         link.addEventListener('mouseleave', () => {
-            cursor.classList.remove('scale-150');
+            resetCursor();
         });
     });
     
+    // Buttons hover effect
+    buttons.forEach(button => {
+        button.addEventListener('mouseenter', () => {
+            cursor.style.transform = 'translate(-50%, -50%) scale(1.3)';
+            cursor.style.borderColor = '#F59E0B';
+            cursor.style.boxShadow = '0 0 12px rgba(245, 158, 11, 0.6), inset 0 0 12px rgba(245, 158, 11, 0.3)';
+            cursorText.textContent = '$ execute';
+            cursorText.style.opacity = '1';
+            cursorText.style.color = '#F59E0B';
+            cursorDot.style.background = '#F59E0B';
+        });
+        
+        button.addEventListener('mouseleave', () => {
+            resetCursor();
+        });
+    });
+    
+    // Input fields hover effect
+    inputs.forEach(input => {
+        input.addEventListener('mouseenter', () => {
+            cursor.style.transform = 'translate(-50%, -50%) scale(0.8)';
+            cursor.style.borderColor = '#8B5CF6';
+            cursor.style.boxShadow = '0 0 8px rgba(139, 92, 246, 0.5), inset 0 0 8px rgba(139, 92, 246, 0.2)';
+            cursorText.textContent = '| input';
+            cursorText.style.opacity = '1';
+            cursorText.style.color = '#8B5CF6';
+            cursorDot.style.background = '#8B5CF6';
+        });
+        
+        input.addEventListener('mouseleave', () => {
+            resetCursor();
+        });
+    });
+    
+    // Code elements hover effect
+    codeElements.forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            cursor.style.transform = 'translate(-50%, -50%) scale(1.2)';
+            cursor.style.borderColor = '#EC4899';
+            cursor.style.boxShadow = '0 0 10px rgba(236, 72, 153, 0.6), inset 0 0 10px rgba(236, 72, 153, 0.3)';
+            cursorText.textContent = '</> code';
+            cursorText.style.opacity = '1';
+            cursorText.style.color = '#EC4899';
+            cursorDot.style.background = '#EC4899';
+        });
+        
+        element.addEventListener('mouseleave', () => {
+            resetCursor();
+        });
+    });
+    
+    function resetCursor() {
+        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+        cursor.style.borderColor = '#60A5FA';
+        cursor.style.boxShadow = '0 0 10px rgba(96, 165, 250, 0.5), inset 0 0 10px rgba(96, 165, 250, 0.2)';
+        cursorText.style.opacity = '0';
+        cursorText.style.color = '#60A5FA';
+        cursorDot.style.background = '#10B981';
+    }
+    
     // Hide default cursor
-    document.body.classList.add('cursor-none');
+    document.body.style.cursor = 'none';
     
     // Hide cursor when mouse leaves the window
     document.addEventListener('mouseleave', () => {
-        cursor.classList.add('opacity-0');
-        cursorDot.classList.add('opacity-0');
+        cursor.style.opacity = '0';
+        cursorDot.style.opacity = '0';
+        cursorText.style.opacity = '0';
     });
     
     document.addEventListener('mouseenter', () => {
-        cursor.classList.remove('opacity-0');
-        cursorDot.classList.remove('opacity-0');
+        cursor.style.opacity = '1';
+        cursorDot.style.opacity = '1';
+    });
+    
+    // Add click effect
+    document.addEventListener('mousedown', () => {
+        cursor.style.transform = 'translate(-50%, -50%) scale(0.9)';
+        cursorDot.style.transform = 'translate(-50%, -50%) scale(1.5)';
+    });
+    
+    document.addEventListener('mouseup', () => {
+        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+        cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
     });
 }
 
