@@ -7,12 +7,19 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', 'monospace'],
+                        'code': ['Fira Code', 'JetBrains Mono', 'Monaco', 'Consolas', 'monospace'],
+                    },
                     colors: {
                         primary: {
                             light: '#3B82F6', // blue-500
@@ -34,7 +41,6 @@
                     animation: {
                         'float': 'float 3s ease-in-out infinite',
                         'typing': 'typing 3.5s steps(30, end), blink .75s step-end infinite',
-                        'wave': 'wave 2.5s ease-in-out infinite',
                         'bounce-slow': 'bounce 3s infinite',
                         'pulse-glow': 'pulseGlow 2s infinite',
                     },
@@ -50,16 +56,6 @@
                         blink: {
                             '0%, 100%': { borderColor: 'transparent' },
                             '50%': { borderColor: 'currentColor' }
-                        },
-                        wave: {
-                            '0%': { transform: 'rotate(0.0deg)' },
-                            '10%': { transform: 'rotate(14.0deg)' },
-                            '20%': { transform: 'rotate(-8.0deg)' },
-                            '30%': { transform: 'rotate(14.0deg)' },
-                            '40%': { transform: 'rotate(-4.0deg)' },
-                            '50%': { transform: 'rotate(10.0deg)' },
-                            '60%': { transform: 'rotate(0.0deg)' },
-                            '100%': { transform: 'rotate(0.0deg)' }
                         },
                         pulseGlow: {
                             '0%, 100%': { 
@@ -202,6 +198,32 @@
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
         
+        /* Improved Typewriter Effect */
+        .typing-container {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-weight: 400;
+        }
+        
+        .typed-text {
+            color: #60A5FA;
+        }
+        
+        .typewriter-cursor {
+            color: #60A5FA;
+            animation: blink 1s infinite;
+            font-weight: bold;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        /* Enhanced navbar hover effects */
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        
         .scroll-to-top {
             position: fixed;
             bottom: 100px; /* Moved up from 30px to 50px */
@@ -224,12 +246,33 @@
             height: 2px;
             bottom: -2px;
             left: 0;
-            background-color: #60A5FA;
+            background: linear-gradient(90deg, #3B82F6, #06B6D4);
             transition: width 0.3s ease;
         }
         
         .nav-link:hover::after {
             width: 100%;
+        }
+        
+        /* Coding style navbar animations */
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .nav-link:hover::before {
+            left: 100%;
         }
         
         .success-message {
@@ -285,68 +328,81 @@
         <div class="absolute bottom-40 left-1/4 w-96 h-96 bg-pink-900 rounded-full mix-blend-soft-light filter blur-3xl opacity-20 animate-float" style="animation-delay: 4s"></div>
     </div>
 
-    <!-- Enhanced Navigation -->
-<header class="fixed w-full z-50 backdrop-blur-md bg-gray-900/90 shadow-lg theme-transition border-b border-gray-800">
+    <!-- Enhanced Navigation with Coding Style -->
+<header class="fixed w-full z-50 backdrop-blur-md bg-black/95 shadow-lg theme-transition border-b border-blue-500/20">
     <div class="container mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-blue-300">
+                <span class="text-2xl font-bold font-code text-white">
                     <span class="relative inline-block">
-                        Luqman Booso
-                        <span class="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
+                        <span class="text-blue-400">&lt;</span>
+                        <span class="text-white">LuqmanBooso</span>
+                        <span class="text-blue-400">/&gt;</span>
+                        <span class="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-blue-500 to-cyan-400 transform scale-x-0 origin-left transition-transform hover:scale-x-100"></span>
                     </span>
                 </span>
-                <span class="animate-wave inline-block ml-1">👋</span>
             </div>
             
             <div class="flex items-center gap-6">
-                <nav class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="nav-link py-2 px-1 font-medium text-text-dark hover:text-primary-dark transition-colors relative">Home</a>
-                    <a href="#about" class="nav-link py-2 px-1 font-medium text-text-dark hover:text-primary-dark transition-colors relative">About</a>
-                    <a href="#projects" class="nav-link py-2 px-1 font-medium text-text-dark hover:text-primary-dark transition-colors relative">Projects</a>
-                    <a href="#skills" class="nav-link py-2 px-1 font-medium text-text-dark hover:text-primary-dark transition-colors relative">Skills</a>
-                    <a href="#contact" class="ml-2 px-5 py-2 bg-primary-dark text-white rounded-full hover:bg-blue-500 transition-colors shadow-sm">Contact</a>
+                <nav class="hidden md:flex items-center space-x-8 font-code">
+                    <a href="#home" class="nav-link py-2 px-1 font-medium text-white hover:text-blue-400 transition-colors relative">
+                        <span class="text-blue-400">./</span>home
+                    </a>
+                    <a href="#about" class="nav-link py-2 px-1 font-medium text-white hover:text-blue-400 transition-colors relative">
+                        <span class="text-blue-400">./</span>about
+                    </a>
+                    <a href="#projects" class="nav-link py-2 px-1 font-medium text-white hover:text-blue-400 transition-colors relative">
+                        <span class="text-blue-400">./</span>projects
+                    </a>
+                    <a href="#skills" class="nav-link py-2 px-1 font-medium text-white hover:text-blue-400 transition-colors relative">
+                        <span class="text-blue-400">./</span>skills
+                    </a>
+                    <a href="#contact" class="ml-2 px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-code rounded border border-blue-400 hover:from-blue-500 hover:to-blue-400 hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105">
+                        <span class="text-blue-200">[</span> Contact <span class="text-blue-200">]</span>
+                    </a>
                 </nav>
-                <button id="menuBtn" class="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors">
-                    <i class="fas fa-bars text-lg"></i>
+                <button id="menuBtn" class="md:hidden flex items-center justify-center w-10 h-10 rounded bg-gray-900 border border-blue-500 hover:bg-gray-800 transition-colors">
+                    <i class="fas fa-bars text-lg text-blue-400"></i>
                 </button>
             </div>
         </div>
     </div>
     
-    <!-- Mobile Menu with Enhanced Styling -->
-    <div id="mobileMenu" class="mobile-menu fixed top-0 left-0 h-full w-72 bg-gray-900 p-6 md:hidden shadow-2xl theme-transition z-50">
-        <div class="flex justify-between items-center mb-8 pb-4 border-b border-gray-700">
-            <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">Luqman Booso</span>
-            <button id="closeMenu" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-800 text-white hover:bg-gray-700 transition-colors">
+    <!-- Mobile Menu with Enhanced Coding Style -->
+    <div id="mobileMenu" class="mobile-menu fixed top-0 left-0 h-full w-72 bg-black border-r border-blue-500/30 p-6 md:hidden shadow-2xl theme-transition z-50">
+        <div class="flex justify-between items-center mb-8 pb-4 border-b border-blue-500/30">
+            <span class="text-xl font-bold font-code text-white">
+                <span class="text-blue-400">&lt;</span>LuqmanBooso<span class="text-blue-400">/&gt;</span>
+            </span>
+            <button id="closeMenu" class="w-8 h-8 flex items-center justify-center rounded bg-gray-900 border border-blue-500 text-blue-400 hover:bg-gray-800 transition-colors">
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        <nav class="flex flex-col space-y-5">
-            <a href="#home" class="flex items-center py-2 px-4 rounded-lg hover:bg-gray-800 transition-colors">
-                <i class="fas fa-home mr-3 text-primary-dark"></i>
-                <span>Home</span>
+        <nav class="flex flex-col space-y-5 font-code">
+            <a href="#home" class="flex items-center py-2 px-4 rounded border border-transparent hover:border-blue-500/30 hover:bg-gray-900/50 transition-colors text-white">
+                <span class="text-blue-400 mr-3">$</span>
+                <span>cd home</span>
             </a>
-            <a href="#about" class="flex items-center py-2 px-4 rounded-lg hover:bg-gray-800 transition-colors">
-                <i class="fas fa-user mr-3 text-primary-dark"></i>
-                <span>About</span>
+            <a href="#about" class="flex items-center py-2 px-4 rounded border border-transparent hover:border-blue-500/30 hover:bg-gray-900/50 transition-colors text-white">
+                <span class="text-blue-400 mr-3">$</span>
+                <span>cd about</span>
             </a>
-            <a href="#projects" class="flex items-center py-2 px-4 rounded-lg hover:bg-gray-800 transition-colors">
-                <i class="fas fa-briefcase mr-3 text-primary-dark"></i>
-                <span>Projects</span>
+            <a href="#projects" class="flex items-center py-2 px-4 rounded border border-transparent hover:border-blue-500/30 hover:bg-gray-900/50 transition-colors text-white">
+                <span class="text-blue-400 mr-3">$</span>
+                <span>cd projects</span>
             </a>
-            <a href="#skills" class="flex items-center py-2 px-4 rounded-lg hover:bg-gray-800 transition-colors">
-                <i class="fas fa-code mr-3 text-primary-dark"></i>
-                <span>Skills</span>
+            <a href="#skills" class="flex items-center py-2 px-4 rounded border border-transparent hover:border-blue-500/30 hover:bg-gray-900/50 transition-colors text-white">
+                <span class="text-blue-400 mr-3">$</span>
+                <span>cd skills</span>
             </a>
-            <a href="#contact" class="flex items-center py-2 px-4 rounded-lg hover:bg-gray-800 transition-colors">
-                <i class="fas fa-envelope mr-3 text-primary-dark"></i>
-                <span>Contact</span>
+            <a href="#contact" class="flex items-center py-2 px-4 rounded border border-transparent hover:border-blue-500/30 hover:bg-gray-900/50 transition-colors text-white">
+                <span class="text-blue-400 mr-3">$</span>
+                <span>cd contact</span>
             </a>
         </nav>
-        <div class="mt-10 pt-6 border-t border-gray-700">
+        <div class="mt-10 pt-6 border-t border-blue-500/30">
             <div class="flex space-x-5 justify-center">
-                <a href="https://github.com/luqmanbooso" class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white transition-colors">
+                <a href="https://github.com/luqmanbooso" class="w-9 h-9 flex items-center justify-center rounded border border-blue-500/30 bg-gray-900 text-blue-400 hover:bg-gray-800 hover:text-white transition-colors">
                     <i class="fab fa-github"></i>
                 </a>
                 <a href="https://linkedin.com/in/luqmanbooso" class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white transition-colors">

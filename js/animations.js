@@ -23,9 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Setup form field animations
     setupFormFieldAnimations();
     
-    // Initialize enhanced typewriter effect
-    initTypewriter();
-    
     // Setup 3D effect for profile image
     setupProfileImageEffect();
 });
@@ -83,102 +80,70 @@ function initTypewriter() {
     typewriterElement.classList.add('typing-container');
     typewriterElement.innerHTML = '';
     
+    const textSpan = document.createElement('span');
+    textSpan.className = 'typed-text';
+    
     const cursorElement = document.createElement('span');
     cursorElement.className = 'typewriter-cursor';
+    cursorElement.innerHTML = '|';
+    
+    typewriterElement.appendChild(textSpan);
     typewriterElement.appendChild(cursorElement);
     
     let phraseIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
+    let isWaiting = false;
     
-    const typingSpeed = 60; // Base typing speed
-    const deletingSpeed = 30; // Base deleting speed
-    const waitAtEnd = 2000; // Wait time at end of phrase
+    const typingSpeed = 80; // Slower for smoother effect
+    const deletingSpeed = 40; // Slower for smoother deletion
+    const waitAtEnd = 2500; // Wait time at end of phrase
     const waitAtStart = 800; // Wait time at start of phrase
     
-    function getRandomSpeed(baseSpeed) {
-        // Add randomness for more natural typing
-        return baseSpeed + Math.random() * 40 - 20;
-    }
-    
-    function createCharSpan(char) {
-        const span = document.createElement('span');
-        span.textContent = char;
-        span.className = 'typing-char';
-        return span;
-    }
-    
     function typeAnimation() {
+        if (isWaiting) return;
+        
         const currentPhrase = phrases[phraseIndex];
-        const textContainer = typewriterElement;
         
         if (isDeleting) {
-            // Remove character with animation
-            const chars = textContainer.querySelectorAll('.typing-char');
-            if (chars.length > 0) {
-                const lastChar = chars[chars.length - 1];
-                lastChar.classList.add('deleting-char');
-                
+            // Remove character
+            textSpan.textContent = currentPhrase.substring(0, charIndex - 1);
+            charIndex--;
+            
+            if (charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                isWaiting = true;
                 setTimeout(() => {
-                    if (lastChar.parentNode) {
-                        lastChar.remove();
-                    }
-                }, 50);
-                
-                charIndex--;
+                    isWaiting = false;
+                    typeAnimation();
+                }, waitAtStart);
+                return;
             }
         } else {
-            // Type character with animation
-            if (charIndex < currentPhrase.length) {
-                const char = currentPhrase[charIndex];
-                const charSpan = createCharSpan(char);
-                
-                // Insert before cursor
-                textContainer.insertBefore(charSpan, cursorElement);
-                
-                // Trigger animation
+            // Add character
+            textSpan.textContent = currentPhrase.substring(0, charIndex + 1);
+            charIndex++;
+            
+            if (charIndex === currentPhrase.length) {
+                isDeleting = true;
+                isWaiting = true;
                 setTimeout(() => {
-                    charSpan.style.animationDelay = '0s';
-                }, 10);
-                
-                charIndex++;
+                    isWaiting = false;
+                    typeAnimation();
+                }, waitAtEnd);
+                return;
             }
         }
         
-        // Determine next action and speed
-        let nextSpeed;
-        
-        if (!isDeleting && charIndex === currentPhrase.length) {
-            // Finished typing, wait then start deleting
-            nextSpeed = waitAtEnd;
-            isDeleting = true;
-        } else if (isDeleting && charIndex === 0) {
-            // Finished deleting, move to next phrase
-            isDeleting = false;
-            phraseIndex = (phraseIndex + 1) % phrases.length;
-            nextSpeed = waitAtStart;
-        } else {
-            // Continue typing or deleting
-            nextSpeed = getRandomSpeed(isDeleting ? deletingSpeed : typingSpeed);
-        }
-        
-        setTimeout(typeAnimation, nextSpeed);
+        // Continue animation with appropriate speed
+        const speed = isDeleting ? deletingSpeed : typingSpeed;
+        setTimeout(typeAnimation, speed + Math.random() * 50); // Add slight randomness
     }
     
-    // Add glow effect to cursor
-    function enhanceCursor() {
-        const cursor = typewriterElement.querySelector('.typewriter-cursor');
-        if (cursor) {
-            cursor.addEventListener('animationiteration', () => {
-                cursor.style.filter = `hue-rotate(${Math.random() * 60}deg)`;
-            });
-        }
-    }
-    
-    // Start animation
+    // Start animation after initial delay
     setTimeout(() => {
         typeAnimation();
-        enhanceCursor();
     }, 1000);
 }
 
