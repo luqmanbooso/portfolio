@@ -331,3 +331,65 @@ section {
     0%, 49% { opacity: 1; }
     50%, 100% { opacity: 0; }
 }
+
+/* Coding Style Navbar Enhancements */
+.nav-link {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* Terminal-style hover effects */
+.nav-link:hover {
+    text-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
+    transform: translateY(-1px);
+}
+
+/* Contact button terminal style */
+header .nav-link[href="#contact"] {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    border: 1px solid #60a5fa;
+    box-shadow: 
+        0 0 0 1px rgba(96, 165, 250, 0.3),
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    position: relative;
+    overflow: hidden;
+}
+
+header .nav-link[href="#contact"]:hover {
+    box-shadow: 
+        0 0 0 1px rgba(96, 165, 250, 0.6),
+        0 10px 15px -3px rgba(59, 130, 246, 0.4),
+        0 4px 6px -2px rgba(59, 130, 246, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Mobile menu terminal styling */
+#mobileMenu {
+    background: linear-gradient(135deg, #000000 0%, #111827 100%);
+    border-right: 2px solid #3b82f6;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+#mobileMenu .nav-link {
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.3s ease;
+}
+
+#mobileMenu .nav-link:hover {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: #60a5fa;
+    text-shadow: 0 0 8px rgba(96, 165, 250, 0.8);
+}
+
+/* Add terminal prompt animation */
+@keyframes terminal-prompt {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+#mobileMenu .nav-link span:first-child {
+    animation: terminal-prompt 2s infinite;
+}
