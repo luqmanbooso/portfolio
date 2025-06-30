@@ -70,75 +70,116 @@ function initTypewriter() {
     if (!typewriterElement) return;
     
     const phrases = [
-        'Full Stack Developer',
-        'Problem Solver',
-        'Creative Coder',
-        'Software Engineer',
-        'Innovation Enthusiast',
-        'Tech Explorer',
-        'Digital Creator'
+        '> initializing_developer.exe...',
+        '> const role = "Full Stack Developer";',
+        '> let passion = "Creating Solutions";',
+        '> while(learning) { improve(); }',
+        '> console.log("Ready to Code!");',
+        '> import { creativity } from "mind";',
+        '> function buildDreams() { return true; }'
     ];
     
-    let currentPhraseIndex = 0;
-    let currentCharIndex = 0;
-    let isDeleting = false;
-    let isWaiting = false;
+    // Create typing container and cursor
+    typewriterElement.classList.add('typing-container');
+    typewriterElement.innerHTML = '';
     
-    function typeText() {
-        if (isWaiting) return;
+    const cursorElement = document.createElement('span');
+    cursorElement.className = 'typewriter-cursor';
+    typewriterElement.appendChild(cursorElement);
+    
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    
+    const typingSpeed = 60; // Base typing speed
+    const deletingSpeed = 30; // Base deleting speed
+    const waitAtEnd = 2000; // Wait time at end of phrase
+    const waitAtStart = 800; // Wait time at start of phrase
+    
+    function getRandomSpeed(baseSpeed) {
+        // Add randomness for more natural typing
+        return baseSpeed + Math.random() * 40 - 20;
+    }
+    
+    function createCharSpan(char) {
+        const span = document.createElement('span');
+        span.textContent = char;
+        span.className = 'typing-char';
+        return span;
+    }
+    
+    function typeAnimation() {
+        const currentPhrase = phrases[phraseIndex];
+        const textContainer = typewriterElement;
         
-        const currentPhrase = phrases[currentPhraseIndex];
+        if (isDeleting) {
+            // Remove character with animation
+            const chars = textContainer.querySelectorAll('.typing-char');
+            if (chars.length > 0) {
+                const lastChar = chars[chars.length - 1];
+                lastChar.classList.add('deleting-char');
+                
+                setTimeout(() => {
+                    if (lastChar.parentNode) {
+                        lastChar.remove();
+                    }
+                }, 50);
+                
+                charIndex--;
+            }
+        } else {
+            // Type character with animation
+            if (charIndex < currentPhrase.length) {
+                const char = currentPhrase[charIndex];
+                const charSpan = createCharSpan(char);
+                
+                // Insert before cursor
+                textContainer.insertBefore(charSpan, cursorElement);
+                
+                // Trigger animation
+                setTimeout(() => {
+                    charSpan.style.animationDelay = '0s';
+                }, 10);
+                
+                charIndex++;
+            }
+        }
         
-        if (!isDeleting && currentCharIndex < currentPhrase.length) {
-            // Typing
-            typewriterElement.textContent = currentPhrase.substring(0, currentCharIndex + 1);
-            currentCharIndex++;
-            
-            setTimeout(typeText, 80 + Math.random() * 50); // Variable typing speed
-        } else if (isDeleting && currentCharIndex > 0) {
-            // Deleting
-            typewriterElement.textContent = currentPhrase.substring(0, currentCharIndex - 1);
-            currentCharIndex--;
-            
-            setTimeout(typeText, 40 + Math.random() * 30); // Faster deleting
-        } else if (!isDeleting && currentCharIndex === currentPhrase.length) {
+        // Determine next action and speed
+        let nextSpeed;
+        
+        if (!isDeleting && charIndex === currentPhrase.length) {
             // Finished typing, wait then start deleting
-            isWaiting = true;
-            setTimeout(() => {
-                isWaiting = false;
-                isDeleting = true;
-                typeText();
-            }, 2000); // Wait 2 seconds before deleting
-        } else if (isDeleting && currentCharIndex === 0) {
+            nextSpeed = waitAtEnd;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
             // Finished deleting, move to next phrase
             isDeleting = false;
-            currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
-            
-            setTimeout(typeText, 500); // Brief pause before next phrase
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            nextSpeed = waitAtStart;
+        } else {
+            // Continue typing or deleting
+            nextSpeed = getRandomSpeed(isDeleting ? deletingSpeed : typingSpeed);
+        }
+        
+        setTimeout(typeAnimation, nextSpeed);
+    }
+    
+    // Add glow effect to cursor
+    function enhanceCursor() {
+        const cursor = typewriterElement.querySelector('.typewriter-cursor');
+        if (cursor) {
+            cursor.addEventListener('animationiteration', () => {
+                cursor.style.filter = `hue-rotate(${Math.random() * 60}deg)`;
+            });
         }
     }
     
-    // Add glowing cursor effect
-    const cursor = document.createElement('span');
-    cursor.className = 'typewriter-cursor animate-pulse';
-    cursor.innerHTML = '|';
-    cursor.style.color = '#00d4ff';
-    cursor.style.marginLeft = '2px';
-    cursor.style.animation = 'blink 1s infinite';
-    
-    // Start animation after a short delay
+    // Start animation
     setTimeout(() => {
-        typeText();
-        typewriterElement.appendChild(cursor);
+        typeAnimation();
+        enhanceCursor();
     }, 1000);
-    
-    // Add typing sound effect (optional)
-    function playTypingSound() {
-        // Uncomment if you want typing sounds
-        // const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwfCDuO1/DQfyEyoXjONQAACFZwAAD///8AAAcAEg///////w==');
-        // audio.volume = 0.1;
-        // audio.play().catch(() => {});
-    }
 }
 
 // Setup 3D perspective hover for profile image
